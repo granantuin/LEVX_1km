@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from help_functions import get_meteogalicia_model_1Km, get_metar, get_table_download_link
+from help_functions import get_meteogalicia_model_1Km, get_metar
 import pickle
 import streamlit as st
 import plotly.express as px
