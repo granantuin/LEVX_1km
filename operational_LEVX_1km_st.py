@@ -7,18 +7,18 @@ from st_aggrid import AgGrid
 
 st.set_page_config(page_title="LEVX Machine Learning",layout="wide")
 
-#open algorithm
-alg = pickle.load(open("algorithms/vis_LEVX_1km_d0.al","rb"))
-
-#load raw meteorological model and get model variables
-meteo_model = get_meteogalicia_model_1Km (alg["coor"])
- 
 #get metar today
 try:
   metar_df=get_metar("LEVX")
 except:
   metar_df = pd.DataFrame()
 
+#open algorithm visibility d0
+alg = pickle.load(open("algorithms/vis_LEVX_1km_d0.al","rb"))
+
+#load raw meteorological model and get model variables
+meteo_model = get_meteogalicia_model_1Km (alg["coor"])
+ 
 #select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
 
@@ -26,8 +26,8 @@ model_x_var = meteo_model[:24][alg["x_var"]]
 vis_ml = (pd.DataFrame(alg["pipe"].predict_proba(model_x_var))).iloc[:,0].map("{:.0%}".format).values
 
 #show results prec visibility fog cloud cover
-st.write("#### **Machine learning results (precipitation, visibility, BR/FG, cloud low layer cover and height) forecast D0**")
-st.write("###### **Horizontal visibility min [T-1hour,T)**")
+st.write("#### **Machine learning results (Horizontal visibility, BR/FG, cloud low layer cover and height) forecast D0**")
+st.write("###### **Horizontal visibility min (T-1hour,T]**")
 st.write("###### **Precipitation, BR or FG, cloud cover and cloud height on time T**")
 
 """
