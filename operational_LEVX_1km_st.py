@@ -32,7 +32,7 @@ alg = pickle.load(open("algorithms/prec_LEVX_1km_d0.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 
 #forecast machine learning  horizontal visibility meters
-prec_ml = (pd.DataFrame(alg["pipe"].predict_proba(model_x_var))).iloc[:,0].map("{:.0%}".format).values
+prec_ml = (pd.DataFrame(alg["pipe"].predict_proba(model_x_var))).iloc[:,1].map("{:.0%}".format).values
 
 #open algorithm precipitation d0
 alg = pickle.load(open("algorithms/skyc1_LEVX_1km_d0.al","rb"))
