@@ -43,6 +43,15 @@ model_x_var = meteo_model[:24][alg["x_var"]]
 #forecast machine learning  horizontal visibility meters
 skyc1_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm precipitation d0
+alg = pickle.load(open("algorithms/skyl1_LEVX_1km_d0.al","rb"))
+ 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
+#forecast machine learning  horizontal visibility meters
+skyl1_ml = alg["pipe"].predict(model_x_var)
+
 #show results prec visibility fog cloud cover
 st.write("#### **Machine learning results (Horizontal visibility, BR/FG, cloud low layer cover and height) forecast D0**")
 st.write("###### **Horizontal visibility min (T-1hour,T]**")
@@ -60,7 +69,8 @@ df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
 df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
                      "visibility <=1000m (prob)":vis_ml,
                      "Precipitation (prob)":prec_ml,
-                     "Cloud cover":skyc1_ml,})
+                     "Cloud cover":skyc1_ml,
+                     "Cloud height":skyl1_ml})
 
 df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
