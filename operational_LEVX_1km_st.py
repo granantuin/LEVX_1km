@@ -77,4 +77,4 @@ df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
-st.write("Project [link](https://github.com/granantuin/LEVX_1km)
+st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
