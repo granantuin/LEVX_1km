@@ -77,4 +77,27 @@ df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
+
+#show results wind and temperature
+
+#open algorithm dir d0
+alg = pickle.load(open("algorithms/dir_LEVX_1km_d0.al","rb"))
+ 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
+#forecast machine learning brfg
+dir_ml = alg["pipe"].predict(model_x_var)
+
+st.write("#### **Results wind and temperature forecast  D0**")
+st.write("###### **Wind speed mean interval [T-1hour,T)**")
+st.write("###### **Wind gust, direction and temperature on time T**")         
+df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
+                     "Wind direction":dir_ml,
+                     "dir WRF":round(model_x_var["dir0"],0)})
+
+df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
+df_all = df_all.rename(columns={"index": "Time UTC"})
+AgGrid(df_all)
+
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
