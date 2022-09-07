@@ -89,12 +89,23 @@ model_x_var = meteo_model[:24][alg["x_var"]]
 #forecast machine learning brfg
 dir_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm temp d0
+alg = pickle.load(open("algorithms/temp_LEVX_1km_d0.al","rb"))
+ 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
+#forecast machine learning brfg
+temp_ml = alg["pipe"].predict(model_x_var)
+
 st.write("#### **Results wind and temperature forecast  D0**")
 st.write("###### **Wind speed mean interval [T-1hour,T)**")
 st.write("###### **Wind gust, direction and temperature on time T**")         
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                      "Wind direction":dir_ml,
-                     "dir WRF":round(model_x_var["dir0"],0)})
+                     "dir WRF":round(model_x_var["dir0"],0),
+                     "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
+                     "Temperature ml":temp_ml})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all = df_all.rename(columns={"index": "Time UTC"})
