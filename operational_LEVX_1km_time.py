@@ -14,7 +14,7 @@ except:
   metar_df = pd.DataFrame()
 
 #open algorithm visibility d0
-alg = pickle.load(open("algorithms/BRFG_LEVX_1km_time_d0.al","rb"))
+alg = pickle.load(open("algorithms/brfg_LEVX_1km_time_d0.al","rb"))
 
 
 #load raw meteorological model and add time variables
