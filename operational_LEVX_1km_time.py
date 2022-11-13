@@ -38,7 +38,7 @@ alg = pickle.load(open("algorithms/temp_LEVX_1km_time_d0.al","rb"))
 temp_ml = alg["pipe"].predict(model_x_var)
 
 
-st.write("###### **, BR or FG, temperature on time T**")
+st.write("###### **BR or FG, temperature on time T**")
 
 df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
                       "Fog or BR":brfg_ml,
