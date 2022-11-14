@@ -44,17 +44,26 @@ alg = pickle.load(open("algorithms/dir_LEVX_1km_time_d0.al","rb"))
 dir_ml = alg["pipe"].predict(model_x_var)
 
 
-st.write("###### **BR or FG, temperature, wind direction on time T**")
+st.write("###### **BR or FG, temperature, on time T**")
 
 df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
                       "Fog or BR":brfg_ml,
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
-                      "Temperature ml":np.rint(temp_ml-273.16),
-                      "DIR WRF": np.rint(model_x_var["dir0"]),
-                      "DIR ml": dir_ml})
+                      "Temperature ml":np.rint(temp_ml-273.16)})
 
 df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
+
+st.write("###### **Wind gust, intensity and  direction on time T**")  
+
+df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
+                        "Wind direction":dir_ml,
+                        "dir WRF":round(model_x_var["dir0"],0)})
+
+df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
+df_all = df_all.rename(columns={"index": "Time UTC"})
+AgGrid(df_all)
+
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
