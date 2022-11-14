@@ -58,7 +58,7 @@ AgGrid(df_all)
 st.write("###### **Wind gust, intensity and  direction on time T**")  
 
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
-                        "Wind direction":dir_ml,
+                        "dir ml":dir_ml,
                         "dir WRF":round(model_x_var["dir0"],0)})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
