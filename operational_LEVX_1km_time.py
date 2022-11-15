@@ -67,7 +67,7 @@ df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "dir ml":dir_ml,
                         "dir WRF":round(model_x_var["dir0"],0),
                         "spd WRF":round(model_x_var["mod0"]*1.94384,0),
-                        "spd_ml": round(spd_ml*1.94384,0)})
+                        "spd_ml": np.rint(spd_ml*1.94384)})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all = df_all.rename(columns={"index": "Time UTC"})
