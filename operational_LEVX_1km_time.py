@@ -49,6 +49,12 @@ alg = pickle.load(open("algorithms/spd_LEVX_1km_time_d0.al","rb"))
 #forecast machine learning dir
 spd_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm dir d0
+alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
+
+#forecast machine learning dir
+gust_ml = alg["pipe"].predict(model_x_var)
+
 
 st.write("###### **BR or FG, temperature, on time T**")
 
@@ -67,7 +73,8 @@ df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "dir ml":dir_ml,
                         "dir WRF":round(model_x_var["dir0"],0),
                         "spd WRF":round(model_x_var["mod0"]*1.94384,0),
-                        "spd_ml": np.rint(spd_ml*1.94384)})
+                        "spd ml": np.rint(spd_ml*1.94384),
+                        "gust ml" gust_ml})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all = df_all.rename(columns={"index": "Time UTC"})
