@@ -68,7 +68,7 @@ df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
                       "Fog or BR":brfg_ml,
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
                       "Temperature ml":np.rint(temp_ml-273.16),
-                       "Dew T ml"::np.rint(temp_ml-273.16)})
+                      "Dew T ml":np.rint(tempd_ml-273.16)})
 
 df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
