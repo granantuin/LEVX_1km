@@ -61,6 +61,12 @@ alg = pickle.load(open("algorithms/tempd_LEVX_1km_time_d0.al","rb"))
 #forecast machine learning tempd
 tempd_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm H visibility d0
+alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0.al","rb"))
+
+#forecast machine learning tempd
+vis_ml = alg["pipe"].predict(model_x_var)
+
 
 st.write("###### **BR or FG, temperature, on time T**")
 
@@ -82,6 +88,15 @@ df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "spd WRF":round(model_x_var["mod0"]*1.94384,0),
                         "spd ml": np.rint(spd_ml*1.94384),
                         "gust ml": gust_ml})
+
+df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
+df_all = df_all.rename(columns={"index": "Time UTC"})
+AgGrid(df_all)
+
+st.write("###### **Horizontal visibility, on time T**")
+
+df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
+                        "Hor visibility":vis_ml,})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all = df_all.rename(columns={"index": "Time UTC"})
