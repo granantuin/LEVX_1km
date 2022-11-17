@@ -83,7 +83,7 @@ pres_ml = alg["pipe"].predict(model_x_var)
 st.write("###### **BR or FG, temperature, on time T**")
 
 df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
-                      "Fog or BR":brfg_ml,
+                      "Fog/BR ml":brfg_ml,
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
                       "Temperature ml":np.rint(temp_ml-273.16),
                       "Dew T ml":np.rint(tempd_ml-273.16)})
@@ -108,10 +108,10 @@ AgGrid(df_all)
 st.write("###### **Horizontal visibility, Precipitation on time T**")
 
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
-                        "Hor visibility":vis_ml,
+                        "vis Hor ml":vis_ml,
                         "prec WRF": round(model_x_var["prec0"],1),
                         "prec ml": prec_ml,
-                        "QNH WRF":round(model_x_var["mslp0"]/100,0),
+                        "QNH WRF":np.rint(model_x_var["mslp0"]/100),
                         "QNH ml": np.rint(pres_ml)})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
