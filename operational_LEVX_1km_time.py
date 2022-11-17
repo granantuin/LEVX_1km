@@ -73,6 +73,12 @@ alg = pickle.load(open("algorithms/prec_LEVX_1km_time_d0.al","rb"))
 #forecast machine learning prec
 prec_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm pres d0
+alg = pickle.load(open("algorithms/pres_LEVX_1km_time_d0.al","rb"))
+
+#forecast machine learning prec
+pres_ml = alg["pipe"].predict(model_x_var)
+
 
 st.write("###### **BR or FG, temperature, on time T**")
 
@@ -104,7 +110,9 @@ st.write("###### **Horizontal visibility, Precipitation on time T**")
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "Hor visibility":vis_ml,
                         "prec WRF": round(model_x_var["prec0"],1),
-                        "prec ml": prec_ml})
+                        "prec ml": prec_ml,
+                        "QNH WRF":round(model_x_var["mslp0"]/100,0),
+                        "QNH ml": np.rint(pres_ml)})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all = df_all.rename(columns={"index": "Time UTC"})
