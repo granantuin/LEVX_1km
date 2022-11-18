@@ -5,7 +5,7 @@ import pickle
 import streamlit as st
 from st_aggrid import AgGrid
 
-st.set_page_config(page_title="Vigo airport forecast Machine Learning",layout="wide")
+st.set_page_config(page_title="Vigo airport (LEVX) forecast Machine Learning",layout="wide")
 
 #get metar today
 try:
