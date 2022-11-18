@@ -115,7 +115,7 @@ skyc1_ml = alg["pipe"].predict(model_x_var)
 
 
 
-st.write("###### **BR or FG, temperature, on time T**")
+st.write("###### **BR or FG, Skycover, temperature and dew temperature, (WRF:meteorological model, ml: machine learning **")
 
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
