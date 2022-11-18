@@ -119,7 +119,7 @@ st.write("###### **BR or FG, temperature, on time T**")
 
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
-                      "Skycover ml": skyc1_ml
+                      "Skycover ml": skyc1_ml,
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
                       "Temperature ml":np.rint(temp_ml-273.16),
                       "Dew T ml":np.rint(tempd_ml-273.16)})
