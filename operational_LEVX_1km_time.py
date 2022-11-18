@@ -115,7 +115,7 @@ skyc1_ml = alg["pipe"].predict(model_x_var)
 
 
 
-st.write("###### **BR or FG, Skycover, temperature and dew temperature, (WRF:meteorological model, ml: machine learning **")
+st.write("###### **BR or FG, Skycover, temperature and dew temperature, (WRF:meteorological model, ml: machine learning)**")
 
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
@@ -128,7 +128,7 @@ df_all=pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
 df_all=df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
-st.write("###### **Wind gust, intensity and  direction on time T**")  
+st.write("###### **Wind gust, intensity and direction, (WRF:meteorological model, ml: machine learning)**")  
 
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "dir ml":dir_ml,
@@ -142,7 +142,7 @@ df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index(
 df_all = df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
-st.write("###### **Horizontal visibility, Precipitation on time T**")
+st.write("###### **Horizontal visibility, precipitation, QNH, (WRF:meteorological model, ml: machine learning)**")
 
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "vis Hor ml":vis_ml,
