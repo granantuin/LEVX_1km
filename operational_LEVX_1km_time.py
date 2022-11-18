@@ -34,11 +34,17 @@ brfg_ml = alg["pipe"].predict(model_x_var)
 #open algorithm temp d0
 alg = pickle.load(open("algorithms/temp_LEVX_1km_time_d0.al","rb"))
 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
 #forecast machine learning temp
 temp_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm dir d0
 alg = pickle.load(open("algorithms/dir_LEVX_1km_time_d0.al","rb"))
+
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
 
 #forecast machine learning dir
 dir_ml = alg["pipe"].predict(model_x_var)
@@ -46,11 +52,17 @@ dir_ml = alg["pipe"].predict(model_x_var)
 #open algorithm dir d0
 alg = pickle.load(open("algorithms/spd_LEVX_1km_time_d0.al","rb"))
 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
 #forecast machine learning dir
 spd_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm dir d0
 alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
+
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
 
 #forecast machine learning dir
 gust_ml = alg["pipe"].predict(model_x_var)
@@ -58,11 +70,17 @@ gust_ml = alg["pipe"].predict(model_x_var)
 #open algorithm tempd d0
 alg = pickle.load(open("algorithms/tempd_LEVX_1km_time_d0.al","rb"))
 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
 #forecast machine learning tempd
 tempd_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm H visibility d0
 alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0.al","rb"))
+
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
 
 #forecast machine learning visibility
 vis_ml = alg["pipe"].predict(model_x_var)
@@ -70,20 +88,38 @@ vis_ml = alg["pipe"].predict(model_x_var)
 #open algorithm precipitation d0
 alg = pickle.load(open("algorithms/prec_LEVX_1km_time_d0.al","rb"))
 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
 #forecast machine learning prec
 prec_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm pres d0
 alg = pickle.load(open("algorithms/pres_LEVX_1km_time_d0.al","rb"))
 
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
 #forecast machine learning prec
 pres_ml = alg["pipe"].predict(model_x_var)
+
+#open algorithm skyc1 d0
+alg = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d0.al","rb"))
+
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
+#forecast machine learning prec
+skyc1_ml = alg["pipe"].predict(model_x_var)
+
+
 
 
 st.write("###### **BR or FG, temperature, on time T**")
 
-df_for0=pd.DataFrame({"time UTC":meteo_model[:24].index,
-                      "Fog/BR ml":brfg_ml,
+df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
+                      "Fog/BR ml": brfg_ml,
+                      "Skycover ml": skyc1_ml
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
                       "Temperature ml":np.rint(temp_ml-273.16),
                       "Dew T ml":np.rint(tempd_ml-273.16)})
