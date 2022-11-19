@@ -112,14 +112,22 @@ model_x_var = meteo_model[:24][alg["x_var"]]
 #forecast machine learning prec
 skyc1_ml = alg["pipe"].predict(model_x_var)
 
+#open algorithm skyl1 d0
+alg = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d0.al","rb"))
+
+#select x _var
+model_x_var = meteo_model[:24][alg["x_var"]]
+
+#forecast machine learning prec
+skyl1_ml = alg["pipe"].predict(model_x_var)
 
 
-
-st.write("###### **BR or FG, Skycover, temperature and dew temperature, (WRF:meteorological model, ml: machine learning)**")
+st.write("###### **BR or FG, Cloud (cover and height), temperature and dew temperature, (WRF:meteorological model, ml: machine learning)**")
 
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
-                      "Skycover ml": skyc1_ml,
+                      "Cloud cover ml": skyc1_ml,
+                      "Cloud height ml": skyl1_ml,
                       "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
                       "Temperature ml":np.rint(temp_ml-273.16),
                       "Dew T ml":np.rint(tempd_ml-273.16)})
