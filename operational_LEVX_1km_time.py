@@ -16,7 +16,6 @@ except:
 #open algorithm visibility d0
 alg = pickle.load(open("algorithms/brfg_LEVX_1km_time_d0.al","rb"))
 
-
 #load raw meteorological model and add time variables
 meteo_model = get_meteogalicia_model_1Km (alg["coor"])
 meteo_model["hour"] = meteo_model.index.hour
@@ -24,106 +23,61 @@ meteo_model["month"] = meteo_model.index.month
 meteo_model["dayofyear"] = meteo_model.index.dayofyear
 meteo_model["weekofyear"] = meteo_model.index.weekofyear
 
- 
 #select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning brfg
 brfg_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm temp d0
 alg = pickle.load(open("algorithms/temp_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning temp
 temp_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm dir d0
 alg = pickle.load(open("algorithms/dir_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning dir
 dir_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm dir d0
 alg = pickle.load(open("algorithms/spd_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning dir
 spd_ml = alg["pipe"].predict(model_x_var)
 
-#open algorithm dir d0
+#open algorithm gust d0
 alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning dir
 gust_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm tempd d0
 alg = pickle.load(open("algorithms/tempd_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning tempd
 tempd_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm H visibility d0
 alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning visibility
 vis_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm precipitation d0
 alg = pickle.load(open("algorithms/prec_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning prec
 prec_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm pres d0
 alg = pickle.load(open("algorithms/pres_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning prec
 pres_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm skyc1 d0
 alg = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning prec
 skyc1_ml = alg["pipe"].predict(model_x_var)
 
 #open algorithm skyl1 d0
 alg = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d0.al","rb"))
-
-#select x _var
 model_x_var = meteo_model[:24][alg["x_var"]]
-
-#forecast machine learning prec
 skyl1_ml = alg["pipe"].predict(model_x_var)
 
-
 st.write("###### **BR or FG, Cloud (cover and height), temperature and dew temperature, (WRF:meteorological model, ml: machine learning)**")
-
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
                       "Cloud cover ml": skyc1_ml,
@@ -137,7 +91,6 @@ df_all=df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
 st.write("###### **Wind gust, intensity and direction, (WRF:meteorological model, ml: machine learning)**")  
-
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "dir ml":dir_ml,
                         "dir WRF":round(model_x_var["dir0"],0),
@@ -151,7 +104,6 @@ df_all = df_all.rename(columns={"index": "Time UTC"})
 AgGrid(df_all)
 
 st.write("###### **Horizontal visibility, precipitation, QNH, (WRF:meteorological model, ml: machine learning)**")
-
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "vis Hor ml":vis_ml,
                         "prec WRF": round(model_x_var["prec0"],1),
