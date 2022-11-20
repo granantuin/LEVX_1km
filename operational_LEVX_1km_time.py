@@ -82,7 +82,7 @@ df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
                       "Fog/BR ml": brfg_ml,
                       "Cloud cover ml": skyc1_ml,
                       "Cloud height ml": skyl1_ml,
-                      "Temperature WRF":round(model_x_var["temp0"]-273.16,0),
+                      "Temperature WRF":np.rint(model_x_var["temp0"]-273.16),
                       "Temperature ml":np.rint(temp_ml-273.16),
                       "Dew T ml":np.rint(tempd_ml-273.16)})
 
@@ -93,8 +93,8 @@ AgGrid(df_all)
 st.write("###### **Wind gust, intensity and direction, (WRF:meteorological model, ml: machine learning)**")  
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:24].index,
                         "dir ml":dir_ml,
-                        "dir WRF":round(model_x_var["dir0"],0),
-                        "spd WRF":round(model_x_var["mod0"]*1.94384,0),
+                        "dir WRF":np.rint(model_x_var["dir0"]),
+                        "spd WRF": np.rint(model_x_var["mod0"]*1.94384),
                         "spd ml": np.rint(spd_ml*1.94384),
                         "gust ml": gust_ml,
                         "gust WRF":round(model_x_var["wind_gust0"]*1.94384,0)})
