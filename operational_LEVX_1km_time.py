@@ -12,7 +12,7 @@ st.set_page_config(page_title="Vigo airport (LEVX) forecast Machine Learning",la
 alg = pickle.load(open("algorithms/brfg_LEVX_1km_time_d0.al","rb"))
 
 #load raw meteorological model and add time variables
-meteo_model = get_meteogalicia_model_1Km (alg["coor"])
+meteo_model,con = get_meteogalicia_model_1Km (alg["coor"])
 meteo_model["hour"] = meteo_model.index.hour
 meteo_model["month"] = meteo_model.index.month
 meteo_model["dayofyear"] = meteo_model.index.dayofyear
