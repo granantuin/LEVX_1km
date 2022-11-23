@@ -7,11 +7,6 @@ from st_aggrid import AgGrid
 
 st.set_page_config(page_title="Vigo airport (LEVX) forecast Machine Learning",layout="wide")
 
-#get metar today
-try:
-  metar_df=get_metar("LEVX")
-except:
-  metar_df = pd.DataFrame()
 
 #open algorithm visibility d0
 alg = pickle.load(open("algorithms/brfg_LEVX_1km_time_d0.al","rb"))
@@ -76,6 +71,12 @@ skyc1_ml = alg["pipe"].predict(model_x_var)
 alg = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d0.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 skyl1_ml = alg["pipe"].predict(model_x_var)
+
+#get metar today
+try:
+  metar_df=get_metar("LEVX",con)
+except:
+  metar_df = pd.DataFrame()
 
 st.write("###### **BR or FG, Cloud (cover and height), temperature and dew temperature, (WRF:meteorological model, ml: machine learning)**")
 df_for0=pd.DataFrame({"time UTC": meteo_model[:24].index,
