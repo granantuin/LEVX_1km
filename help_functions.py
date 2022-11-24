@@ -46,8 +46,8 @@ def get_meteogalicia_model_1Km(coorde):
     
     #defining url to get model from Meteogalicia server
     #today = C
-    #today = pd.to_datetime("today")+timedelta(1)
-    today = pd.to_datetime("today")
+    today = pd.to_datetime("today")+timedelta(1)
+    #today = pd.to_datetime("today")
 
     try:
 
