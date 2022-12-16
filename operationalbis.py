@@ -129,7 +129,7 @@ AgGrid(df_all)
 st.write("###### **Wind gust, intensity and direction, (WRF:meteorological model, ml: machine learning)**")  
 df_for0 = pd.DataFrame({"time UTC":meteo_model[:48].index,
                         "dir ml":np.concatenate((dir_ml,dir_ml1),axis=0),
-                        "dir WRF":np.concatenate((np.rint(model_x_var["dir0"],model_x_var1["dir0"]),axis=0),
+                        "dir WRF":np.concatenate((np.rint(model_x_var["dir0"]),np.rint(model_x_var1["dir0"])),axis=0),
                         "spd WRF": np.concatenate((np.rint(model_x_var["mod0"]*1.94384),np.rint(model_x_var1["mod0"]*1.94384)),axis=0),
                         "spd ml": np.concatenate((np.rint(spd_ml*1.94384),np.rint(spd_ml1*1.94384)),axis =0),
                         "gust ml": np.concatenate((gust_ml,gust_ml1),axis=0),
