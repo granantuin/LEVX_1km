@@ -144,7 +144,7 @@ df_for0 = pd.DataFrame({"time UTC":meteo_model[:48].index,
                         "vis Hor ml":np.concatenate((vis_ml,vis_ml1),axis=0),
                         "prec WRF": np.concatenate((round(model_x_var["prec0"],1),round(model_x_var1["prec0"],1)),axis=0),
                         "prec ml": np.concatenate((prec_ml,prec_ml1),axis=0),
-                        "QNH WRF":np.concatenate((np.rint(model_x_var["mslp0"]/100),np.rint(model_x_var1["mslp0"]/100)),axis=0)
+                        "QNH WRF":np.concatenate((np.rint(model_x_var["mslp0"]/100),np.rint(model_x_var1["mslp0"]/100)),axis=0),
                         "QNH ml": np.concatenate((np.rint(pres_ml),np.rint(pres_ml1)),axis=0)})
 
 df_all = pd.concat([df_for0.set_index("time UTC"),metar_df],axis=1).reset_index()
