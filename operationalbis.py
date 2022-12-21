@@ -48,7 +48,7 @@ alg1 = pickle.load(open("algorithms/spd_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 spd_ml = alg["pipe"].predict(model_x_var)
-spd_ml1 = alg["pipe"].predict(model_x_var1)
+spd_ml1 = alg1["pipe"].predict(model_x_var1)
 
 #open algorithm gust d0 d1
 alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
@@ -81,7 +81,7 @@ alg1 = pickle.load(open("algorithms/prec_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 prec_ml = alg["pipe"].predict(model_x_var)
-prec_ml1 = alg["pipe"].predict(model_x_var1)
+prec_ml1 = alg1["pipe"].predict(model_x_var1)
 
 #open algorithm pres d0 d1
 alg = pickle.load(open("algorithms/pres_LEVX_1km_time_d0.al","rb"))
@@ -89,7 +89,7 @@ alg1 = pickle.load(open("algorithms/pres_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 pres_ml = alg["pipe"].predict(model_x_var)
-pres_ml1 = alg["pipe"].predict(model_x_var1)
+pres_ml1 = alg1["pipe"].predict(model_x_var1)
 
 #open algorithm skyc1 d0 d1
 alg = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d0.al","rb"))
@@ -97,7 +97,7 @@ alg1 = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 skyc1_ml = alg["pipe"].predict(model_x_var)
-skyc1_ml1 = alg["pipe"].predict(model_x_var1)
+skyc1_ml1 = alg1["pipe"].predict(model_x_var1)
 
 #open algorithm skyl1 d0 d1
 alg = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d0.al","rb"))
@@ -105,7 +105,7 @@ alg1 = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 skyl1_ml = alg["pipe"].predict(model_x_var)
-skyl1_ml1 = alg["pipe"].predict(model_x_var1)
+skyl1_ml1 = alg1["pipe"].predict(model_x_var1)
 
 #get metar today
 try:
