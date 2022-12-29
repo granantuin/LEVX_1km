@@ -168,7 +168,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 #show meteorological model and control variable. Control variable True if Day analysis = today 
 #st.write(#### **Day analysis = today :**",con)
-#AgGrid(meteo_model.info())
+AgGrid(meteo_model.info())
 
 metars = get_metar("LEVX",con)
 st.write(metars)
