@@ -169,10 +169,10 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 #show meteorological model and control variable. Control variable True if Day analysis = today 
 #st.write(#### **Day analysis = today :**",con)
-st.write(meteo_model)
+#st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
-AgGrid(metars)
+#AgGrid(metars)
 
 
 #@title Wind intensity
@@ -220,9 +220,12 @@ print("Reference (48 hours) Mean absolute error machine learning: 0.89\n")
 title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
 
 #show results
-#df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
-#fig = df_for.plot(grid=True,figsize=(10,6),linestyle='--', title = "Forecast meteorological model versus machine learning");
-#st.pyplot(fig)
+fig, ax = plt.subplots(figsize=(10,6))
+df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
+ax.set_title("Forecast meteorological model versus machine learning")
+
+# Display the plot in Streamlit
+st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
