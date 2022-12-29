@@ -219,7 +219,7 @@ print("Reference (48 hours) Mean absolute error machine learning: 0.89\n")
 title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
 
 #show results
-df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
+#df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
 fig = df_for.plot(grid=True,figsize=(10,6),linestyle='--', title = "Forecast meteorological model versus machine learning");
 st.pyplot(fig)
 
