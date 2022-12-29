@@ -220,9 +220,14 @@ title = "Mean absolute error meteorological model: {}\nMean absolute error machi
 
 #show results
 #df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
-fig = df_for.plot(grid=True,figsize=(10,6),linestyle='--', title = "Forecast meteorological model versus machine learning");
+#fig = df_for.plot(grid=True,figsize=(10,6),linestyle='--', title = "Forecast meteorological model versus machine learning");
+#st.pyplot(fig)
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(10,6))
+df_for.plot(grid=True, ax=ax, linestyle='--')
+ax.set_title("Forecast meteorological model versus machine learning")
+
+# Display the plot in Streamlit
 st.pyplot(fig)
-
-
-
 
