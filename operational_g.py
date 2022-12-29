@@ -323,11 +323,12 @@ st.pyplot(fig)
 #probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = pd.DataFrame(prob,index =alg["pipe"].classes_ ).T
-df_prob["time"] = meteo_model[:48].index
 
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
+df_prob["time"] = meteo_model[:48].index
+
 st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
 
