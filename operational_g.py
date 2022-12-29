@@ -172,3 +172,57 @@ st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
 AgGrid(metars)
+
+
+#@title Wind intensity
+import pickle
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import median_absolute_error
+
+#open algorithm spd d0 d1
+alg = pickle.load(open("algorithms/spd_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/spd_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat spd from ml
+spd_ml = alg["pipe"].predict(meteo_model[:24][alg["x_var"]])
+spd_ml1 = alg1["pipe"].predict(meteo_model[24:48][alg1["x_var"]])
+
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "spd_WRF": np.concatenate((np.rint(model_x_var["mod0"]*1.94384),
+                                                   np.rint(model_x_var1["mod0"]*1.94384)),axis=0),
+                       "spd_ml": np.concatenate((np.rint(spd_ml*1.94384),
+                                                  np.rint(spd_ml1*1.94384)),axis =0),})
+df_for = df_for.set_index("time")
+
+#metar versus forecast
+# set the max columns to none
+pd.set_option('display.max_rows', 100)
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["spd_o"]],axis = 1)
+
+#get mae
+df_res_dropna = df_res.dropna()
+mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
+mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
+
+#print results
+print("***Wind intensity knots***")
+print("Reference (48 hours) Mean absolute error meteorological model: 1.35")
+print("Reference (48 hours) Mean absolute error machine learning: 0.89\n")
+
+#print("\n",df_res[["spd_ml","spd_o","spd_WRF"]])
+title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+
+#show results
+df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
+fig = df_for.plot(grid=True,figsize=(10,6),linestyle='--', title = "Forecast meteorological model versus machine learning");
+st.pyplot(fig)
+
+
+
+
