@@ -9,6 +9,7 @@ import base64
 import pickle
 import warnings
 import streamlit as st
+import matplotlib.pyplot as plt
 from st_aggrid import AgGrid
 
 warnings.filterwarnings("ignore")
