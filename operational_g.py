@@ -216,13 +216,11 @@ print("***Wind intensity knots***")
 print("Reference (48 hours) Mean absolute error meteorological model: 1.35")
 print("Reference (48 hours) Mean absolute error machine learning: 0.89\n")
 
-#print("\n",df_res[["spd_ml","spd_o","spd_WRF"]])
-title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
-
 #show results
 fig, ax = plt.subplots(figsize=(10,6))
-df_res.dropna().plot(grid=True,figsize=(10,6),linestyle='--',title = title);
-ax.set_title("Forecast meteorological model versus machine learning")
+df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
+title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+ax.set_title(title)
 
 # Display the plot in Streamlit
 st.pyplot(fig)
