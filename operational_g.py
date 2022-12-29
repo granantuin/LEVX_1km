@@ -171,5 +171,5 @@ st.write(#### **Day analysis = today :**",con)
 AgGrid(meteo_model.info())
 
 
-metars = get_metar("LEVX",con)
-AgGrid(metars)
+#metars = get_metar("LEVX",con)
+#AgGrid(metars)
