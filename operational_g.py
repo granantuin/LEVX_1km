@@ -13,10 +13,6 @@ from st_aggrid import AgGrid
 
 warnings.filterwarnings("ignore")
 
-# to get the help functions add at path system
-#sys.path.append('/content/drive/MyDrive/Colab Notebooks/LEVX_1km')
-#import help_functions
-
 def get_metar(oaci,control):
      """
      get metar from IOWA university database
@@ -171,9 +167,9 @@ meteo_model["dayofyear"] = meteo_model.index.dayofyear
 meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 #show meteorological model and control variable. Control variable True if Day analysis = today 
-print("Day analysis = today :",con)
-meteo_model.info()
+st.write(#### **Day analysis = today :**",con)
+AgGrid(meteo_model.info())
 
 
 metars = get_metar("LEVX",con)
-metars
+AgGrid(metars)
