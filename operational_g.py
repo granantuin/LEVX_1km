@@ -328,5 +328,5 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
 st.write("""Probabilistic results only columns more than 5%""")
-AgGrid(df_prob)
+AgGrid(round(df_prob,2))
 
