@@ -702,4 +702,72 @@ df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
+#@title Cloud height
+#open algorithm  d0 d1
+alg = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/skyl1_LEVX_1km_time_d1.al","rb"))
 
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat skyl1 from ml
+skyl1_ml = alg["pipe"].predict(model_x_var)
+skyl1_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#label metars skyl1s data
+#clouds height to feet or "M" no clooud
+num = pd.to_numeric(metars.skyl1_o, errors="coerce")*1
+
+#label more or less than 200 feet
+interval = pd.IntervalIndex.from_tuples([(-1, 300),(300,7000)])
+labels = ["<=300ft",">300ft"]
+metars["skyl1_l"] = pd.cut(num, bins=interval,retbins=False,labels=labels)
+metars["skyl1_l"] = metars["skyl1_l"].map({a:b for a,b in zip(interval,labels)})
+metars["skyl1_l"] = metars["skyl1_l"].astype(str).replace("nan","No Cloud")
+
+
+#set up dataframe forecast machine learning 
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "skyl1_ml": np.concatenate((skyl1_ml,skyl1_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["skyl1_l"]], axis = 1)
+df_res_dropna = df_res.dropna()
+
+#Accuracy score ml
+cm_ml = pd.crosstab(df_res.dropna().skyl1_l, df_res.dropna().skyl1_ml, margins=True,)
+acc_ml = round(accuracy_score(df_res_dropna.skyl1_l,df_res_dropna.skyl1_ml),2)
+
+
+#show results
+st.markdown("**Cloud height level 1**")
+st.markdown("Reference (48 hours) Accuracy machine learning: 0.83")
+st.markdown("Confusion matrix machine learning")
+st.write(cm_ml)
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res_dropna.index, df_res_dropna['skyl1_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.legend(('vis ml', 'vis observed'))
+plt.grid(True)
+plt.title("\nAccuracy machine learning: {} ".format(acc_ml))
+st.pyplot(fig)
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_for.index, df_for['skyl1_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+
+plt.title("Forecast machine learning")
+plt.grid(True)
+st.pyplot(fig)
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
+AgGrid(round(df_prob,2))
