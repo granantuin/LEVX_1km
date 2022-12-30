@@ -382,4 +382,4 @@ st.pyplot(fig)
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
-AgGrid(df_prob)            
+AgGrid(round(df_prob,2))            
