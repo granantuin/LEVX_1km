@@ -323,3 +323,64 @@ df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
 
+#@title Wind gust
+#open algorithm gust d0 d1
+alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/gust_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat gust from ml
+gust_ml = alg["pipe"].predict(model_x_var)
+gust_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#label metars gust data
+metars["gust_o_l"] = ["No Gust" if c=="M" else "Gust" for c in metars.gust_o]
+
+#set up dataframe forecast machine learning 
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "gust_ml": np.concatenate((gust_ml,gust_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["gust_o_l"]], axis = 1)
+df_res_dropna = df_res.dropna()
+
+#Heidke skill score
+cm = pd.crosstab(df_res.dropna().gust_o_l, df_res.dropna().gust_ml, margins=True,)
+HSS = 0
+if cm.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm.values[0,0]
+  b = cm.values[1,0]
+  c = cm.values[0,1]
+  d = cm.values[1,1]
+  HSS = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+#show results
+st.markdown("**Wind gust**")
+st.markdown("Reference (48 hours) Heidke skill Score: 0.42\")
+st.markdown("Confusion matrix")
+AgGrid(cm)
+
+plt.figure(figsize=(12, 2))
+plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*",linestyle='');
+plt.legend(('gust ml', 'gust observed'),)
+plt.grid(True)
+plt.title("Heidke skill Score: {}".format(HSS))
+plt.show()
+
+
+plt.figure(figsize=(12, 2))
+plt.plot(df_for.index, df_for['gust_ml'],marker="^", markersize=8, markerfacecolor='w', linestyle='');
+plt.title("Forecast machine learning")
+plt.grid(True)
+plt.show()
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+AgGrid(df_prob)            
