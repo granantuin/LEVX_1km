@@ -383,6 +383,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
 #@title Visibility
@@ -470,6 +471,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
 #@title BR or FG
@@ -541,6 +543,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
 
@@ -632,5 +635,6 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
