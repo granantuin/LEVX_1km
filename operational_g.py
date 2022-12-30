@@ -360,7 +360,7 @@ if cm.shape == (3,3):# complete confusion matrix to calculate HSS
 
 #show results
 st.markdown("**Wind gust**")
-st.markdown("Reference (48 hours) Heidke skill Score: 0.42\")
+st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 AgGrid(cm)
 
