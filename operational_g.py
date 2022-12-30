@@ -383,4 +383,96 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-AgGrid(round(df_prob,2))            
+AgGrid(round(df_prob,2)) 
+
+#@title Visibility
+#open algorithm visibility d0 d1
+#alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0_p.al","rb")) #_p for a plus algorithm
+alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/vis_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat vis from ml
+vis_ml = alg["pipe"].predict(model_x_var)
+vis_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#label metars vis data
+metars["vis_o_l"] = ["<= 1000 m" if c<=1000 else "> 1000 m" for c in metars.visibility_o]
+
+#label meteorological model visibility0
+visibility0_l= ["<= 1000 m" if c<=1000 else "> 1000 m" for c in np.concatenate((model_x_var["visibility0"],model_x_var1["visibility0"]), axis=0)]
+
+#set up dataframe forecast machine learning 
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "vis_WRF": visibility0_l,
+                       "vis_ml": np.concatenate((vis_ml,vis_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["vis_o_l"]], axis = 1)
+df_res_dropna = df_res.dropna()
+
+#Heidke skill score ml
+cm_ml = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_ml, margins=True,)
+HSS_ml = 0
+if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm_ml.values[0,0]
+  b = cm_ml.values[1,0]
+  c = cm_ml.values[0,1]
+  d = cm_ml.values[1,1]
+  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+#Heidke skill score meteorological model
+cm_wrf = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_WRF, margins=True,)
+HSS_wrf = 0
+if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm_wrf.values[0,0]
+  b = cm_wrf.values[1,0]
+  c = cm_wrf.values[0,1]
+  d = cm_wrf.values[1,1]
+  HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+#show results
+st.markdown("**Visibility**")
+st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.25")
+st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.52")
+st.markdown("Confusion matrix machine learning")
+st.write(cm_ml)
+st.markdown("Confusion matrix meteorological model")
+st.write(cm_wrf)
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res_dropna.index, df_res_dropna['vis_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['vis_o_l'],marker="*",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['vis_WRF'],marker="v",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.legend(('vis ml', 'vis observed',"vis WRF"),)
+plt.grid(True)
+plt.title("Heidke skill score meteorological model: {}\nHeidke skill score machine learning: {} ".format(HSS_wrf,HSS_ml))
+st.pyplot(fig)
+
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_for.index, df_for['vis_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_for.index, df_for['vis_WRF'],marker="v",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.title("Forecast machine learning")
+plt.grid(True)
+st.pyplot(fig)
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob["time"] = meteo_model[:48].index
+AgGrid(round(df_prob,2)) 
+
+
+
+
+
