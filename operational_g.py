@@ -364,21 +364,20 @@ st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 AgGrid(cm)
 
-plt.figure(figsize=(12, 2))
+fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*",linestyle='');
 plt.legend(('gust ml', 'gust observed'),)
 plt.grid(True)
 plt.title("Heidke skill Score: {}".format(HSS))
-plt.show()
+st.pyplot(fig)
 
-
-plt.figure(figsize=(12, 2))
+fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['gust_ml'],marker="^", markersize=8, markerfacecolor='w', linestyle='');
 plt.title("Forecast machine learning")
 plt.grid(True)
-plt.show()
+st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
