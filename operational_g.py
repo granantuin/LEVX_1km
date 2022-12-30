@@ -290,13 +290,9 @@ acc_ml = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_ml),2)
 acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 
 #print results
-st.write("""
-Wind direction
-
-Reference (48 hours) Accuracy meteorological model: 0.20
-
-Reference (48 hours) Accuracy machine learning: 0.41""")
-
+st.markdown("**Wind direction**")
+st.markdown("<sub>Reference (48 hours) Accuracy meteorological model: 0.20<\sub>")
+st.markdown("<sub>Reference (48 hours) Accuracy machine learning: 0.41<\sub>""")
 
 #show results
 fig, ax = plt.subplots(figsize=(10,6))
