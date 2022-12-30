@@ -545,3 +545,92 @@ AgGrid(round(df_prob,2))
 
 
 
+#@title Precipitation
+#open algorithm prec d0 d1
+alg = pickle.load(open("algorithms/prec_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/prec_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat prec from ml
+prec_ml = alg["pipe"].predict(model_x_var)
+prec_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#label metars prec data
+metars["prec_o_l"] = "No RA/DZ"
+mask = metars['wxcodes_o'].str.contains("RA")
+metars.loc[mask,["prec_o_l"]] = "RA/DZ"
+mask = metars['wxcodes_o'].str.contains("DZ")
+metars.loc[mask,["prec_o_l"]] = "RA/DZ"
+
+#label meteorological model prec0
+prec0_l= ["RA/DZ" if c>0 else "No RA/DZ" for c in np.concatenate((model_x_var["prec0"],model_x_var1["prec0"]), axis=0)]
+
+#set up dataframe forecast machine learning 
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "prec_WRF": prec0_l,
+                       "prec_ml": np.concatenate((prec_ml,prec_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["prec_o_l"]], axis = 1)
+df_res_dropna = df_res.dropna()
+
+#Heidke skill score ml
+cm_ml = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_ml, margins=True,)
+HSS_ml = 0
+if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm_ml.values[0,0]
+  b = cm_ml.values[1,0]
+  c = cm_ml.values[0,1]
+  d = cm_ml.values[1,1]
+  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+#Heidke skill score meteorological model
+cm_wrf = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_WRF, margins=True,)
+HSS_wrf = 0
+if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm_wrf.values[0,0]
+  b = cm_wrf.values[1,0]
+  c = cm_wrf.values[0,1]
+  d = cm_wrf.values[1,1]
+  HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+#show results
+st.markdown("**Precipitation**")
+st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.43")
+st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.55")
+st.markdown("Confusion matrix machine learning")
+st.write(cm_ml)
+st.markdown("Confusion matrix meteorological model")
+st.write(cm_wrf)
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res_dropna.index, df_res_dropna['prec_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['prec_o_l'],marker="*",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['prec_WRF'],marker="v",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.legend(('prec ml', 'prec observed',"precipitation WRF"),)
+plt.grid(True)
+plt.title("Heidke skill score meteorological model: {}\nHeidke skill score machine learning: {} ".format(HSS_wrf,HSS_ml))
+st.pyplot(fig)
+
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_for.index, df_for['prec_ml'],marker="^", markersize=8, markerfacecolor='w', linestyle='');
+plt.plot(df_for.index, df_for['prec_WRF'],marker="v",markersize=8, markerfacecolor='w', linestyle='');
+plt.legend(('prec ml', "precipitation WRF"),)
+plt.title("Forecast machine learning versus WRF")
+plt.grid(True)
+st.pyplot(fig)
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob["time"] = meteo_model[:48].index
+AgGrid(round(df_prob,2)) 
+
