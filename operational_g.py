@@ -812,16 +812,12 @@ fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
 title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
 ax.set_title(title)
-
-# Display the plot in Streamlit
 st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
-
-# Display the plot in Streamlit
 st.pyplot(fig)
 
 
@@ -865,11 +861,54 @@ st.pyplot(fig)
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, linestyle='--')
 ax.set_title("Forecast machine learning")
-
-# Display the plot in Streamlit
 st.pyplot(fig)
 
 
+#@title Mean sea level pressure
+
+#open algorithm temperature d0 d1
+alg = pickle.load(open("algorithms/pres_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/pres_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat mean sea level pressure from ml and wrf
+pres_ml = alg["pipe"].predict(meteo_model[:24][alg["x_var"]])
+pres_ml1 = alg1["pipe"].predict(meteo_model[24:48][alg1["x_var"]])
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "mslp_WRF": np.concatenate((np.rint(model_x_var["mslp0"]/100),
+                                                   np.rint(model_x_var1["mslp0"]/100)),axis=0),
+                       "mslp_ml": np.concatenate((np.rint(pres_ml),np.rint(pres_ml1)),axis =0),})
+df_for = df_for.set_index("time")
+
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["mslp_o"]],axis = 1)
+
+#get mae
+df_res_dropna = df_res.dropna()
+mae_ml = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_ml),2)
+mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF),2)
+
+#print results
+st.markdown("**Pressure hectopascals**")
+st.markdown("Reference (48 hours) Mean absolute error meteorological model: 0.85")
+st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.45")
+
+#show results
+fig, ax = plt.subplots(figsize=(10,6))
+df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
+title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+ax.set_title(title)
+st.pyplot(fig)
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(10,6))
+df_for.plot(grid=True, ax=ax, linestyle='--')
+ax.set_title("Forecast meteorological model versus machine learning")
+st.pyplot(fig)
 
 
 
