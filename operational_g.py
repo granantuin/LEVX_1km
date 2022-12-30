@@ -638,3 +638,68 @@ df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
 
+
+#@title Cloud cover
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
+
+#open algorithm skyc1 d0 d1
+alg = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/skyc1_LEVX_1km_time_d1.al","rb"))
+
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat spd from ml
+skyc1_ml = alg["pipe"].predict(model_x_var)
+skyc1_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#set up dataframe forecast machine learning and WRF
+df_for = pd.DataFrame({"time":meteo_model[:48].index,
+                       "skyc1_ml": np.concatenate((skyc1_ml,skyc1_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+  
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["skyc1_o"]],axis = 1)
+
+#get accuracy
+df_res_dropna = df_res.dropna()
+acc_ml = round(accuracy_score(df_res_dropna.skyc1_o,df_res_dropna.skyc1_ml),2)
+
+#show results
+st.markdown("**Cloud cover level 1**")
+st.markdown("Reference (48 hours) Accuracy machine learning: 0.64")
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_res_dropna.index, df_res_dropna['skyc1_o'], marker="*", markersize=13,
+         markerfacecolor='k', linestyle='');
+
+plt.legend(('direction ml', 'direction observed'),)
+plt.grid(True)
+plt.title("Accuracy machine learning: {} ".format(acc_ml))
+st.pyplot(fig)
+
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_for.index, df_for['skyc1_ml'],marker="^",linestyle='');
+plt.legend(('skyc1 ml'),)
+plt.title("Forecast machine learning")
+plt.grid(True)
+st.pyplot(fig)
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+df_prob["time"] = meteo_model[:48].index
+st.write("""Probabilistic results""")
+AgGrid(round(df_prob,2)) 
+
+
