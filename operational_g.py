@@ -472,7 +472,76 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 df_prob["time"] = meteo_model[:48].index
 AgGrid(round(df_prob,2)) 
 
+#@title BR or FG
+#open algorithm prec d0 d1
+alg = pickle.load(open("algorithms/brfg_LEVX_1km_time_d0.al","rb"))
+alg1 = pickle.load(open("algorithms/brfg_LEVX_1km_time_d1.al","rb"))
 
+#select model variables
+model_x_var = meteo_model[:24][alg["x_var"]]
+model_x_var1 = meteo_model[24:48][alg1["x_var"]]
+
+# forecat br/fg from ml
+brfg_ml = alg["pipe"].predict(model_x_var)
+brfg_ml1 = alg1["pipe"].predict(model_x_var1)
+
+#label metars br/fg data
+metars["brfg_o_l"] = "No BR/FG"
+mask = metars['wxcodes_o'].str.contains("BR")
+metars.loc[mask,["brfg_o_l"]] = "BR/FG"
+mask = metars['wxcodes_o'].str.contains("FG")
+metars.loc[mask,["brfg_o_l"]] = "BR/FG"
+
+
+
+#set up dataframe forecast machine learning 
+df_for = pd.DataFrame({"time": meteo_model[:48].index,
+                       "brfg_ml": np.concatenate((brfg_ml,brfg_ml1),axis =0),})
+df_for = df_for.set_index("time")
+
+# concat metars an forecast
+df_res = pd.concat([df_for,metars["brfg_o_l"]], axis = 1)
+df_res_dropna = df_res.dropna()
+
+#Heidke skill score ml
+cm_ml = pd.crosstab(df_res.dropna().brfg_o_l, df_res.dropna().brfg_ml, margins=True,)
+HSS_ml = 0
+if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
+  a = cm_ml.values[0,0]
+  b = cm_ml.values[1,0]
+  c = cm_ml.values[0,1]
+  d = cm_ml.values[1,1]
+  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+
+
+#show results
+st.markdown("**BR or FG**")
+st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.64")
+st.markdown("Confusion matrix")
+st.write(cm_ml)
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res_dropna.index, df_res_dropna['brfg_ml'],marker="^", markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.plot(df_res_dropna.index, df_res_dropna['brfg_o_l'],marker="*",markersize=8, 
+         markerfacecolor='w', linestyle='');
+plt.legend(('brfg ml', 'brfg observed'),)
+plt.grid(True)
+plt.title("Heidke skill score machine learning: {} ".format(HSS_ml))
+st.pyplot(fig)
+
+
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_for.index, df_for['brfg_ml'],marker="^",linestyle='');
+plt.title("Forecast machine learning")
+plt.grid(True)
+st.pyplot(fig)
+
+#show probabilistic results
+prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob["time"] = meteo_model[:48].index
+AgGrid(round(df_prob,2)) 
 
 
 
