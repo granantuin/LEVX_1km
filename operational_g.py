@@ -549,7 +549,7 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 #AgGrid(round(df_prob,2)) 
-st.bar_chart(round(df_prob,2), x= "time",y = ""BR/FG"")
+st.bar_chart(round(df_prob,2), x= "time",y = "BR/FG")
 
 
 #@title Precipitation
