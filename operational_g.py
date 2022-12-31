@@ -478,7 +478,7 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2)) 
-st.bar_chart(df_prob, x="time",y = "<= 1000 m")
+st.bar_chart(df_prob, x= "time",y = ["<= 1000 m", "> 1000 m"])
 
 #@title BR or FG
 #open algorithm prec d0 d1
