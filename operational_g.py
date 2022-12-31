@@ -289,7 +289,7 @@ acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 
 #print results
 st.markdown("**Wind direction**")
-st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35\n Reference (48 hours) Mean absolute error machine learning: 0.89")
+st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35, Reference (48 hours) Mean absolute error machine learning: 0.89")
 
 
 
