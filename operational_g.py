@@ -325,7 +325,7 @@ df_prob["time"] = meteo_model[:48].index
 
 st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
-st.bar_chart(df_prob, x=time, y=df_prob.columns[:-1])
+st.bar_chart(df_prob, x= "time", y=df_prob.columns[:-1])
 
 
 
