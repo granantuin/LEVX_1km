@@ -174,7 +174,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 #st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
-#AgGrid(metars)
+AgGrid(metars)
 
 
 #@title Wind intensity
