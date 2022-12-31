@@ -14,6 +14,8 @@ from st_aggrid import AgGrid
 
 warnings.filterwarnings("ignore")
 
+st.set_page_config(page_title="Vigo airport Machine Learning forecast",layout="wide")
+
 def get_metar(oaci,control):
      """
      get metar from IOWA university database
