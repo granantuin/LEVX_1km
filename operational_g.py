@@ -389,7 +389,8 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-AgGrid(round(df_prob,2)) 
+#AgGrid(round(df_prob,2)) 
+st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
 
 #@title Visibility
 #open algorithm visibility d0 d1
@@ -500,8 +501,6 @@ metars.loc[mask,["brfg_o_l"]] = "BR/FG"
 mask = metars['wxcodes_o'].str.contains("FG")
 metars.loc[mask,["brfg_o_l"]] = "BR/FG"
 
-
-
 #set up dataframe forecast machine learning 
 df_for = pd.DataFrame({"time": meteo_model[:48].index,
                        "brfg_ml": np.concatenate((brfg_ml,brfg_ml1),axis =0),})
@@ -538,7 +537,6 @@ plt.grid(True)
 plt.title("Heidke skill score machine learning: {} ".format(HSS_ml))
 st.pyplot(fig)
 
-
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['brfg_ml'],marker="^",linestyle='');
 plt.title("Forecast machine learning")
@@ -550,8 +548,8 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-AgGrid(round(df_prob,2)) 
-
+#AgGrid(round(df_prob,2)) 
+st.bar_chart(round(df_prob,2), x= "time",y = ""BR/FG"")
 
 
 #@title Precipitation
@@ -642,8 +640,8 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-AgGrid(round(df_prob,2)) 
-
+#AgGrid(round(df_prob,2)) 
+st.bar_chart(round(df_prob,2), x= "time",y = "RA/DZ")
 
 #@title Cloud cover
 import matplotlib.pyplot as plt
