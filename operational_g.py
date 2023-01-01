@@ -214,7 +214,7 @@ mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
 
 #print results
-st.markdown("**Wind intensity knots**")
+st.markdown(" #### **Wind intensity knots**")
 st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35")
 st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.89")
 
@@ -327,7 +327,6 @@ st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
 
 
-
 #@title Wind gust
 #open algorithm gust d0 d1
 alg = pickle.load(open("algorithms/gust_LEVX_1km_time_d0.al","rb"))
@@ -364,7 +363,7 @@ if cm.shape == (3,3):# complete confusion matrix to calculate HSS
   HSS = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
 
 #show results
-st.markdown("**Wind gust**")
+st.markdown(" #### **Wind gust**")
 st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 st.write(cm)
@@ -443,7 +442,7 @@ if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
   HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
 
 #show results
-st.markdown("**Visibility**")
+st.markdown(" #### **Visibility**")
 st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.25")
 st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.52")
 st.markdown("Confusion matrix machine learning")
@@ -522,7 +521,7 @@ if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
 
 
 #show results
-st.markdown("**BR or FG**")
+st.markdown("  #### **BR or FG**")
 st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.64")
 st.markdown("Confusion matrix")
 st.write(cm_ml)
@@ -606,7 +605,7 @@ if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
   HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
 
 #show results
-st.markdown("**Precipitation**")
+st.markdown(" #### **Precipitation**")
 st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.43")
 st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.55")
 st.markdown("Confusion matrix machine learning")
@@ -673,8 +672,8 @@ df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.skyc1_o,df_res_dropna.skyc1_ml),2)
 
 #show results
-st.markdown("**Cloud cover level 1**")
-st.markdown("Reference (48 hours) Accuracy machine learning: 0.64")
+st.markdown("  #### **Cloud cover level 1**")
+st.markdown("Reference (48 hours) Accuracy machine learning: 64%")
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=8, 
@@ -684,7 +683,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyc1_o'], marker="*", markersize=1
 
 plt.legend(('direction ml', 'direction observed'),)
 plt.grid(True)
-plt.title("Accuracy machine learning: {} ".format(acc_ml))
+plt.title("Accuracy machine learning: {:.0%} ".format(acc_ml))
 st.pyplot(fig)
 
 
@@ -746,8 +745,8 @@ acc_ml = round(accuracy_score(df_res_dropna.skyl1_l,df_res_dropna.skyl1_ml),2)
 
 
 #show results
-st.markdown("**Cloud height level 1**")
-st.markdown("Reference (48 hours) Accuracy machine learning: 0.83")
+st.markdown(" #### **Cloud height level 1**")
+st.markdown("Reference (48 hours) Accuracy machine learning: 83%")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
 
@@ -758,7 +757,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('vis ml', 'vis observed'))
 plt.grid(True)
-plt.title("\nAccuracy machine learning: {} ".format(acc_ml))
+plt.title("\nAccuracy machine learning: {:.0%} ".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -807,7 +806,7 @@ mae_ml = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_ml),2
 mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF),2)
 
 #print results
-st.markdown("**Temperature Celsius**")
+st.markdown(" #### **Temperature Celsius**")
 st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.44")
 st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.85")
 
@@ -851,7 +850,7 @@ df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.tempd_o,df_res_dropna.tempd_ml),2)
 
 #print results
-st.markdown("**Dew temperature Celsius**")
+st.markdown(" #### **Dew temperature Celsius**")
 st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.95")
 
 #show results
@@ -897,7 +896,7 @@ mae_ml = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_ml),2
 mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF),2)
 
 #print results
-st.markdown("**Pressure hectopascals**")
+st.markdown("#### **Pressure hectopascals**")
 st.markdown("Reference (48 hours) Mean absolute error meteorological model: 0.85")
 st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.45")
 
