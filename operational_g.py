@@ -303,7 +303,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize
          markerfacecolor='w', linestyle='');
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
 plt.grid(True)
-plt.title("Accuracy meteorological model: {}\nAccuracy machine learning: {} ".format(acc_wrf,acc_ml))
+plt.title("Accuracy meteorological model: {:.0%}\nAccuracy machine learning: {:.0%} ".format(acc_wrf,acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
