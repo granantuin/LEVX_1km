@@ -368,7 +368,7 @@ st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 st.write(cm)
 
-fig, ax = plt.subplots(figsize=(8,6))
+fig, ax = plt.subplots(figsize=(8,4))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*",linestyle='');
@@ -377,7 +377,7 @@ plt.grid(True)
 plt.title("Heidke skill Score: {}".format(HSS))
 st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(10,6))
+fig, ax = plt.subplots()
 plt.plot(df_for.index, df_for['gust_ml'],marker="^", markersize=8, markerfacecolor='w', linestyle='');
 plt.title("Forecast machine learning")
 plt.grid(True)
