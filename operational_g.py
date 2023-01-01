@@ -752,7 +752,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_ml'],marker="^", markersize=8
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8, 
          markerfacecolor='w', linestyle='');
-plt.legend(('cloud height ml', 'cloud height observed'))
+plt.legend('cloud height ml', 'cloud height observed')
 plt.grid(True)
 plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
 st.pyplot(fig)
