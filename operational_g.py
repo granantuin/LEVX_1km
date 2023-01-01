@@ -174,6 +174,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 #st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
+st.markdown(" #### **Metars**")
 AgGrid(metars)
 
 
@@ -193,7 +194,6 @@ model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 # forecat spd from ml
 spd_ml = alg["pipe"].predict(meteo_model[:24][alg["x_var"]])
 spd_ml1 = alg1["pipe"].predict(meteo_model[24:48][alg1["x_var"]])
-
 df_for = pd.DataFrame({"time":meteo_model[:48].index,
                        "spd_WRF": np.concatenate((np.rint(model_x_var["mod0"]*1.94384),
                                                    np.rint(model_x_var1["mod0"]*1.94384)),axis=0),
@@ -368,7 +368,7 @@ st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 st.write(cm)
 
-fig, ax = plt.subplots(figsize=(10,6))
+fig, ax = plt.subplots(figsize=(8,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*",linestyle='');
@@ -680,8 +680,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=
          markerfacecolor='w', linestyle='')
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_o'], marker="*", markersize=13,
          markerfacecolor='k', linestyle='');
-
-plt.legend(('direction ml', 'direction observed'),)
+plt.legend(('Cloud cover ml', 'cloud cover observed'),)
 plt.grid(True)
 plt.title("Accuracy machine learning: {:.0%} ".format(acc_ml))
 st.pyplot(fig)
