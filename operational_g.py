@@ -377,7 +377,7 @@ plt.grid(True)
 plt.title("Heidke skill Score: {}".format(HSS))
 st.pyplot(fig)
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8,4))
 plt.plot(df_for.index, df_for['gust_ml'],marker="^", markersize=8, markerfacecolor='w', linestyle='');
 plt.title("Forecast machine learning")
 plt.grid(True)
