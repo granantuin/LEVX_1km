@@ -175,7 +175,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 metars = get_metar("LEVX",con)
 st.markdown(" #### **Metars**")
-AgGrid(metars)
+AgGrid(metars[["metar_o","dir_o","spd_o","gust_o","visibility_o","wxcodes_o","skyc1_o","skyl1_o","skyc2_o","skyl2_o","temp_o","tempd_o","mslp_o"]])
 
 
 #@title Wind intensity
@@ -752,7 +752,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_ml'],marker="^", markersize=8
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8, 
          markerfacecolor='w', linestyle='');
-plt.legend(('vis ml', 'vis observed'))
+plt.legend(('cloud height ml', 'cloud height observed'))
 plt.grid(True)
 plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
 st.pyplot(fig)
