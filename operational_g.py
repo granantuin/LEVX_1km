@@ -288,7 +288,7 @@ acc_ml = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_ml),2)
 acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 
 #print results
-st.markdown(" ##### **Wind direction**")
+st.markdown(" #### **Wind direction**")
 st.markdown("Reference (48 hours) Accuracy meteorological model: 28%")
 st.markdown("Reference (48 hours) Accuracy machine learning: 40%") 
 
