@@ -686,10 +686,8 @@ plt.grid(True)
 plt.title("Accuracy machine learning: {:.0%} ".format(acc_ml))
 st.pyplot(fig)
 
-
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['skyc1_ml'],marker="^",linestyle='');
-plt.legend(('skyc1 ml'),)
 plt.title("Forecast machine learning")
 plt.grid(True)
 st.pyplot(fig)
@@ -757,7 +755,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('vis ml', 'vis observed'))
 plt.grid(True)
-plt.title("\nAccuracy machine learning: {:.0%} ".format(acc_ml))
+plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
