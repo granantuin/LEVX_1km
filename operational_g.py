@@ -488,7 +488,7 @@ st.markdown(" ### **BR or FG**")
 st.markdown("Confusion matrix")
 st.write(cm_ml)
 
-fig, ax = plt.subplots(figsize=(10,6))
+fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_res_dropna.index, df_res_dropna['brfg_ml'],marker="^", markersize=8, 
          markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['brfg_o_l'],marker="*",markersize=8, 
@@ -498,7 +498,7 @@ plt.grid(True,axis="both")
 plt.title("Heidke skill score machine learning: {} reference: 0.64".format(HSS_ml))
 st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(10,6))
+fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_for.index, df_for['brfg_ml'],marker="^",linestyle='');
 plt.title("Forecast machine learning")
 plt.grid(True,axis="both")
@@ -567,7 +567,7 @@ if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
   HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
 
 #show results
-st.markdown(" #### **Precipitation**")
+st.markdown(" ### **Precipitation**")
 st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.43")
 st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.55")
 st.markdown("Confusion matrix machine learning")
@@ -577,14 +577,14 @@ st.write(cm_wrf)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['prec_ml'],marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="b", linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['prec_o_l'],marker="*",markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="g",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['prec_WRF'],marker="v",markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="r",linestyle='');
 plt.legend(('prec ml', 'prec observed',"precipitation WRF"),)
-plt.grid(True)
-plt.title("Heidke skill score meteorological model: {}\nHeidke skill score machine learning: {} ".format(HSS_wrf,HSS_ml))
+plt.grid(True,axis="both")
+plt.title("Actual Heidke skill score meteorological model: {} reference: 0.43\nActual Heidke skill score machine learning: {} reference: 0.55".format(HSS_wrf,HSS_ml))
 st.pyplot(fig)
 
 
@@ -593,7 +593,7 @@ plt.plot(df_for.index, df_for['prec_ml'],marker="^", markersize=8, markerfacecol
 plt.plot(df_for.index, df_for['prec_WRF'],marker="v",markersize=8, markerfacecolor='w', linestyle='');
 plt.legend(('prec ml', "precipitation WRF"),)
 plt.title("Forecast machine learning versus WRF")
-plt.grid(True)
+plt.grid(True,axis="both")
 st.pyplot(fig)
 
 #show probabilistic results
