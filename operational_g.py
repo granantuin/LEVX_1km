@@ -87,21 +87,20 @@ def get_meteogalicia_model_1Km(coorde):
     """
     
     #defining url to get model from Meteogalicia server
-    #today = C
-    #today = pd.to_datetime("today")+timedelta(1)
-    today = pd.to_datetime("today")
+       
+    var1="var=dir&var=mod&var=wind_gust&var=mslp&var=temp&var=rh&var=visibility&var=lhflx"
+    var2="&var=lwflx&var=conv_prec&var=prec&var=swflx&var=shflx&var=cape&var=cin&var=cfh&var=T850"
+    var3="&var=cfl&var=cfm&var=cft&var=HGT500&var=HGT850&var=T500&var=snow_prec&var=snowlevel"
+    var=var1+var2+var3 
 
     try:
-
+          
+      today = pd.to_datetime("today")    
       head1 = "http://mandeo.meteogalicia.es/thredds/ncss/wrf_1km_baixas/fmrc/files/"
       head2 = today.strftime("/%Y%m%d/wrf_arw_det1km_history_d05")
       head3 = today.strftime("_%Y%m%d_0000.nc4?")
       head = head1+head2+head3
-  
-      var1="var=dir&var=mod&var=wind_gust&var=mslp&var=temp&var=rh&var=visibility&var=lhflx"
-      var2="&var=lwflx&var=conv_prec&var=prec&var=swflx&var=shflx&var=cape&var=cin&var=cfh&var=T850"
-      var3="&var=cfl&var=cfm&var=cft&var=HGT500&var=HGT850&var=T500&var=snow_prec&var=snowlevel"
-      var=var1+var2+var3
+     
   
       f_day=(today+timedelta(days=2)).strftime("%Y-%m-%d") 
       tail="&time_start="+today.strftime("%Y-%m-%d")+"T01%3A00%3A00Z&time_end="+f_day+"T23%3A00%3A00Z&accept=csv"
@@ -121,6 +120,7 @@ def get_meteogalicia_model_1Km(coorde):
   
       dffinal=dffinal.set_index(pd.date_range(start=today.strftime("%Y-%m-%d"), end=(today+timedelta(days=3)).strftime("%Y-%m-%d"), freq="H")[1:-1])  
       control = True
+          
     except:
 
       today = pd.to_datetime("today")-timedelta(1)
@@ -128,12 +128,7 @@ def get_meteogalicia_model_1Km(coorde):
       head2 = today.strftime("/%Y%m%d/wrf_arw_det1km_history_d05")
       head3 = today.strftime("_%Y%m%d_0000.nc4?")
       head = head1+head2+head3
-  
-      var1="var=dir&var=mod&var=wind_gust&var=mslp&var=temp&var=rh&var=visibility&var=lhflx"
-      var2="&var=lwflx&var=conv_prec&var=prec&var=swflx&var=shflx&var=cape&var=cin&var=cfh&var=T850"
-      var3="&var=cfl&var=cfm&var=cft&var=HGT500&var=HGT850&var=T500&var=snow_prec&var=snowlevel"
-      var=var1+var2+var3
-  
+        
       f_day=(today+timedelta(days=2)).strftime("%Y-%m-%d") 
       tail="&time_start="+today.strftime("%Y-%m-%d")+"T01%3A00%3A00Z&time_end="+f_day+"T23%3A00%3A00Z&accept=csv"
   
