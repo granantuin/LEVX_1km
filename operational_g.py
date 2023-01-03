@@ -207,7 +207,7 @@ ax.set_title(title)
 st.pyplot(fig)
 
 # show forecasts
-fig, ax = plt.subplots(figsize=(10,6))
+fig, ax = plt.subplots(figsize=(8,6))
 df_for.plot(grid=True, ax=ax, linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 st.pyplot(fig)
@@ -261,26 +261,26 @@ acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 
 #print results
 st.markdown(" #### **Wind direction**")
-st.markdown("Reference (48 hours) Accuracy meteorological model: 28%")
-st.markdown("Reference (48 hours) Accuracy machine learning: 40%") 
+#st.markdown("Reference (48 hours) Accuracy meteorological model: 28%")
+#st.markdown("Reference (48 hours) Accuracy machine learning: 40%") 
 
 
 #show results
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['dir_ml'], marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='')
+         markerfacecolor='w', color="b", linestyle='')
 plt.plot(df_res_dropna.index, df_res_dropna['dir_o_l'], marker="*", markersize=13,
-         markerfacecolor='k', linestyle='');
+         markerfacecolor='k', color= "g", linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize=8,
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="r", linestyle='');
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
-plt.grid(True)
-plt.title("Accuracy meteorological model: {:.0%}\nAccuracy machine learning: {:.0%} ".format(acc_wrf,acc_ml))
+plt.grid(True, axis="both")
+plt.title("Actual accuracy meteorological model: {:.0%} reference: 28%\nAccuracy machine learning: {:.0%} reference: 40%".format(acc_wrf,acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
-plt.plot(df_for.index, df_for['dir_ml'],marker="^",linestyle='');
-plt.plot(df_for.index, df_for['dir_WRF_l'],marker="v",linestyle='');
+plt.plot(df_for.index, df_for['dir_ml'],marker="^", color="b", linestyle='');
+plt.plot(df_for.index, df_for['dir_WRF_l'],marker="v",color="r", linestyle='');
 plt.legend(('direction ml','direction WRF'),)
 plt.title("Forecast meteorological model versus machine learning")
 plt.grid(True)
