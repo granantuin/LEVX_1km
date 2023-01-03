@@ -201,7 +201,7 @@ st.markdown(" ### **Wind intensity knots**")
 
 #show results actual versus models
 fig, ax = plt.subplots(figsize=(8,6))
-df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["y","b","g"]);
+df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["r","b","g"]);
 title = "Actual mean absolute error meteorological model: {} /reference: 1.35\nActual mean absolute error machine learning: {} /reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
