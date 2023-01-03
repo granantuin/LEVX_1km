@@ -332,7 +332,7 @@ st.markdown(" ### **Wind gust**")
 st.markdown("Confusion matrix")
 st.write(cm)
 
-fig, ax = plt.subplots(figsize=(8,4))
+fig, ax = plt.subplots(figsize=(8,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
          markerfacecolor='w', color="b", linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*", color= "g",linestyle='');
