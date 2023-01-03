@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from st_aggrid import AgGrid
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import accuracy_score
 
 warnings.filterwarnings("ignore")
 
@@ -76,8 +77,6 @@ def get_metar(oaci,control):
 
      return df_metar 
 
-
-
   
 def get_meteogalicia_model_1Km(coorde):
     """
@@ -88,7 +87,6 @@ def get_meteogalicia_model_1Km(coorde):
     """
     
     #defining url to get model from Meteogalicia server
-       
     var1 = "var=dir&var=mod&var=wind_gust&var=mslp&var=temp&var=rh&var=visibility&var=lhflx"
     var2 = "&var=lwflx&var=conv_prec&var=prec&var=swflx&var=shflx&var=cape&var=cin&var=cfh&var=T850"
     var3 = "&var=cfl&var=cfm&var=cft&var=HGT500&var=HGT850&var=T500&var=snow_prec&var=snowlevel"
@@ -170,7 +168,6 @@ metars = get_metar("LEVX",con)
 st.markdown(" ### **Metars**")
 AgGrid(metars[["metar_o","dir_o","spd_o","gust_o","visibility_o","wxcodes_o","skyc1_o","skyl1_o","skyc2_o","skyl2_o","temp_o","tempd_o","mslp_o"]])
 
-
 #@title Wind intensity
 
 #open algorithm spd d0 d1
@@ -205,7 +202,7 @@ st.markdown(" ### **Wind intensity knots**")
 #show results actual versus models
 fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Actual mean absolute error meteorological model:{} /reference: 1.35\nActual mean absolute error machine learning:{} /reference: 0.89".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {} /reference: 1.35\nActual mean absolute error machine learning: {} /reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
@@ -216,7 +213,6 @@ ax.set_title("Forecast meteorological model versus machine learning")
 st.pyplot(fig)
 
 #@title Wind direction
-from sklearn.metrics import accuracy_score
 
 #open algorithm spd d0 d1
 alg = pickle.load(open("algorithms/dir_LEVX_1km_time_d0.al","rb"))
@@ -254,10 +250,6 @@ df_for["dir_WRF_l"] = pd.cut(df_for["dir_WRF"], bins=interval,retbins=False,
 #dir_o to intervals 
 metars["dir_o_l"] = pd.cut(metars["dir_o"].replace("M",-1).astype(float), bins=interval,retbins=False,
                         labels=labels).map({a:b for a,b in zip(interval,labels)}).astype(str)                    
-
-#metar versus forecast
-# set the max columns to none
-pd.set_option('display.max_rows', 100)
 
 # concat metars an forecast
 df_res = pd.concat([df_for,metars[["dir_o","dir_o_l"]]],axis = 1)
