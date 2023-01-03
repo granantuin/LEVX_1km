@@ -407,14 +407,12 @@ if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
 
 #show results
 st.markdown(" ### **Visibility**")
-#st.markdown("Reference (48 hours) Heidke skill score meteorological model: 0.25")
-#st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.52")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
 st.markdown("Confusion matrix meteorological model")
 st.write(cm_wrf)
 
-fig, ax = plt.subplots(figsize=(8,4))
+fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_res_dropna.index, df_res_dropna['vis_ml'],marker="^", markersize=8, 
          markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['vis_o_l'],marker="*",markersize=8, 
@@ -427,7 +425,7 @@ plt.title("Heidke skill score meteorological model: {} reference: 0.25\nHeidke s
 st.pyplot(fig)
 
 
-fig, ax = plt.subplots(figsize=(8,4))
+fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_for.index, df_for['vis_ml'],marker="^", markersize=8, 
          markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_for.index, df_for['vis_WRF'],marker="v",markersize=8, 
@@ -485,25 +483,25 @@ if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
 
 
 #show results
-st.markdown("  #### **BR or FG**")
-st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.64")
+st.markdown(" ### **BR or FG**")
+#st.markdown("Reference (48 hours) Heidke skill score machine learning: 0.64")
 st.markdown("Confusion matrix")
 st.write(cm_ml)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['brfg_ml'],marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['brfg_o_l'],marker="*",markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="g",linestyle='');
 plt.legend(('brfg ml', 'brfg observed'),)
-plt.grid(True)
-plt.title("Heidke skill score machine learning: {} ".format(HSS_ml))
+plt.grid(True,axis="both")
+plt.title("Heidke skill score machine learning: {} reference: 0.64".format(HSS_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['brfg_ml'],marker="^",linestyle='');
 plt.title("Forecast machine learning")
-plt.grid(True)
+plt.grid(True,axis="both")
 st.pyplot(fig)
 
 #show probabilistic results
