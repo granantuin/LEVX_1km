@@ -344,7 +344,7 @@ st.pyplot(fig)
 fig, ax = plt.subplots(figsize=(8,4))
 plt.plot(df_for.index, df_for['gust_ml'],marker="^", markersize=8, markerfacecolor='w', color="b",linestyle='');
 plt.title("Forecast machine learning")
-plt.grid(True)
+plt.grid(True, axis="both")
 st.pyplot(fig)
 
 #show probabilistic results
@@ -418,11 +418,11 @@ fig, ax = plt.subplots(figsize=(8,4))
 plt.plot(df_res_dropna.index, df_res_dropna['vis_ml'],marker="^", markersize=8, 
          markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['vis_o_l'],marker="*",markersize=8, 
-         markerfacecolor='w', color,"g",linestyle='');
+         markerfacecolor='w', color="g",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['vis_WRF'],marker="v",markersize=8, 
          markerfacecolor='w',color="r", linestyle='');
 plt.legend(('vis ml', 'vis observed',"vis WRF"),)
-plt.grid(True)
+plt.grid(True, axis="both")
 plt.title("Heidke skill score meteorological model: {} reference: 0.25\nHeidke skill score machine learning: {} reference: 0.52".format(HSS_wrf,HSS_ml))
 st.pyplot(fig)
 
@@ -433,7 +433,7 @@ plt.plot(df_for.index, df_for['vis_ml'],marker="^", markersize=8,
 plt.plot(df_for.index, df_for['vis_WRF'],marker="v",markersize=8, 
          markerfacecolor='w', color="r",linestyle='');
 plt.title("Forecast machine learning")
-plt.grid(True)
+plt.grid(True,axis="both")
 st.pyplot(fig)
 
 #show probabilistic results
