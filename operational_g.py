@@ -1,4 +1,3 @@
-#@title Get metars and meteorological model
 import os
 import sys
 import numpy as np
@@ -11,6 +10,8 @@ import warnings
 import streamlit as st
 import matplotlib.pyplot as plt
 from st_aggrid import AgGrid
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_absolute_error
 
 warnings.filterwarnings("ignore")
 
@@ -166,14 +167,11 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 #st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
-st.markdown(" #### **Metars**")
+st.markdown(" ### **Metars**")
 AgGrid(metars[["metar_o","dir_o","spd_o","gust_o","visibility_o","wxcodes_o","skyc1_o","skyl1_o","skyc2_o","skyl2_o","temp_o","tempd_o","mslp_o"]])
 
 
 #@title Wind intensity
-import pickle
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import median_absolute_error
 
 #open algorithm spd d0 d1
 alg = pickle.load(open("algorithms/spd_LEVX_1km_time_d0.al","rb"))
@@ -183,7 +181,7 @@ alg1 = pickle.load(open("algorithms/spd_LEVX_1km_time_d1.al","rb"))
 model_x_var = meteo_model[:24][alg["x_var"]]
 model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 
-# forecat spd from ml
+# forecat spd from ml and wrf
 spd_ml = alg["pipe"].predict(meteo_model[:24][alg["x_var"]])
 spd_ml1 = alg1["pipe"].predict(meteo_model[24:48][alg1["x_var"]])
 df_for = pd.DataFrame({"time":meteo_model[:48].index,
@@ -192,10 +190,6 @@ df_for = pd.DataFrame({"time":meteo_model[:48].index,
                        "spd_ml": np.concatenate((np.rint(spd_ml*1.94384),
                                                   np.rint(spd_ml1*1.94384)),axis =0),})
 df_for = df_for.set_index("time")
-
-#metar versus forecast
-# set the max columns to none
-pd.set_option('display.max_rows', 100)
 
 # concat metars an forecast
 df_res = pd.concat([df_for,metars["spd_o"]],axis = 1)
@@ -207,24 +201,18 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2
 
 #print results
 st.markdown(" ### **Wind intensity knots**")
-#st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35")
-#st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.89")
 
-#show results
-fig, ax = plt.subplots(figsize=(10,6))
+#show results actual versus models
+fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Actual mean absolute error meteorological model: {} reference:1.35\nActual mean absolute error machine learning: {} reference:0.89 ".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model:{} /reference: 1.35\nActual mean absolute error machine learning:{} /reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
-
-# Display the plot in Streamlit
 st.pyplot(fig)
 
-# Create the plot
+# show forecasts
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
-
-# Display the plot in Streamlit
 st.pyplot(fig)
 
 #@title Wind direction
