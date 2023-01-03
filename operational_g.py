@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from st_aggrid import AgGrid
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import accuracy_score
+
 
 warnings.filterwarnings("ignore")
 
@@ -196,10 +196,8 @@ df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
 
-#print results
-st.markdown(" ### **Wind intensity knots**")
-
 #show results actual versus models
+st.markdown(" ### **Wind intensity knots**")
 fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["r","b","g"]);
 title = "Actual mean absolute error meteorological model: {} /reference: 1.35\nActual mean absolute error machine learning: {} /reference: 0.89".format(mae_wrf,mae_ml)
@@ -259,13 +257,8 @@ df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_ml),2)
 acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 
-#print results
+#Show results
 st.markdown(" #### **Wind direction**")
-#st.markdown("Reference (48 hours) Accuracy meteorological model: 28%")
-#st.markdown("Reference (48 hours) Accuracy machine learning: 40%") 
-
-
-#show results
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['dir_ml'], marker="^", markersize=8, 
          markerfacecolor='w', color="b", linestyle='')
@@ -335,8 +328,8 @@ if cm.shape == (3,3):# complete confusion matrix to calculate HSS
   HSS = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
 
 #show results
-st.markdown(" #### **Wind gust**")
-st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
+st.markdown(" ### **Wind gust**")
+#st.markdown("Reference (48 hours) Heidke skill Score: 0.42")
 st.markdown("Confusion matrix")
 st.write(cm)
 
@@ -345,8 +338,8 @@ plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=1
          markerfacecolor='w', linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*",linestyle='');
 plt.legend(('gust ml', 'gust observed'),)
-plt.grid(True)
-plt.title("Heidke skill Score: {}".format(HSS))
+plt.grid(True, axis="both")
+plt.title("Actual Heidke skill Score: {} reference: 0.42".format(HSS))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(8,4))
