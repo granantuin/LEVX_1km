@@ -206,14 +206,14 @@ mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
 
 #print results
-st.markdown(" #### **Wind intensity knots**")
-st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35")
-st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.89")
+st.markdown(" ### **Wind intensity knots**")
+#st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.35")
+#st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.89")
 
 #show results
 fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {} reference:1.35\nActual mean absolute error machine learning: {} reference:0.89 ".format(mae_wrf,mae_ml)
 ax.set_title(title)
 
 # Display the plot in Streamlit
