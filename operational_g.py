@@ -329,7 +329,7 @@ if cm.shape == (3,3):# complete confusion matrix to calculate HSS
 #show results
 st.markdown(" ### **Wind gust**")
 st.markdown("Confusion matrix")
-st.write(cm)
+st.table(cm)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
