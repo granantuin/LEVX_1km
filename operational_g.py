@@ -199,7 +199,7 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2
 st.markdown(" ### **Wind intensity knots**")
 fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["r","b","g"]);
-title = "Actual mean absolute error meteorological model: {} .Reference: 1.35\nActual mean absolute error machine learning: {} .Reference: 0.89".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {}. Reference: 1.35\nActual mean absolute error machine learning: {}. Reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
@@ -267,7 +267,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize
          markerfacecolor='w', color="r", linestyle='');
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
 plt.grid(True, axis="both")
-plt.title("Actual accuracy meteorological model: {:.0%} reference: 28%\nAccuracy machine learning: {:.0%} reference: 40%".format(acc_wrf,acc_ml))
+plt.title("Actual accuracy meteorological model: {:.0%}. Reference: 28%\nAccuracy machine learning: {:.0%}. Reference: 40%".format(acc_wrf,acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -337,7 +337,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=1
 plt.plot(df_res_dropna.index, df_res_dropna['gust_o_l'],marker="*", color= "g",linestyle='');
 plt.legend(('gust ml', 'gust observed'),)
 plt.grid(True, axis="both")
-plt.title("Actual Heidke skill Score: {} reference: 0.42".format(HSS))
+plt.title("Actual Heidke skill score: {}. Reference: 0.42".format(HSS))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(8,4))
@@ -420,9 +420,8 @@ plt.plot(df_res_dropna.index, df_res_dropna['vis_WRF'],marker="v",markersize=8,
          markerfacecolor='w',color="r", linestyle='');
 plt.legend(('vis ml', 'vis observed',"vis WRF"),)
 plt.grid(True, axis="both")
-plt.title("Actual Heidke skill score meteorological model: {} reference: 0.25\nActual Heidke skill score machine learning: {} reference: 0.52".format(HSS_wrf,HSS_ml))
+plt.title("Actual Heidke skill score meteorological model: {}. Reference: 0.25\nActual Heidke skill score machine learning: {}. Reference: 0.52".format(HSS_wrf,HSS_ml))
 st.pyplot(fig)
-
 
 fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_for.index, df_for['vis_ml'],marker="^", markersize=8, 
@@ -493,7 +492,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['brfg_o_l'],marker="*",markersize=8,
          markerfacecolor='w', color="g",linestyle='');
 plt.legend(('brfg ml', 'brfg observed'),)
 plt.grid(True,axis="both")
-plt.title("Actual Heidke skill score machine learning: {} reference: 0.64".format(HSS_ml))
+plt.title("Actual Heidke skill score machine learning: {}. Reference: 0.64".format(HSS_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,4))
@@ -580,9 +579,8 @@ plt.plot(df_res_dropna.index, df_res_dropna['prec_WRF'],marker="v",markersize=8,
          markerfacecolor='w', color="r",linestyle='');
 plt.legend(('prec ml', 'prec observed',"precipitation WRF"),)
 plt.grid(True,axis="both")
-plt.title("Actual Heidke skill score meteorological model: {} reference: 0.43\nActual Heidke skill score machine learning: {} reference: 0.55".format(HSS_wrf,HSS_ml))
+plt.title("Actual Heidke skill score meteorological model: {}. Reference: 0.43\nActual Heidke skill score machine learning: {}. Reference: 0.55".format(HSS_wrf,HSS_ml))
 st.pyplot(fig)
-
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['prec_ml'],marker="^", markersize=8, markerfacecolor='w', color="b", linestyle='');
@@ -597,7 +595,6 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-#AgGrid(round(df_prob,2)) 
 st.bar_chart(round(df_prob,2), x= "time",y = "RA/DZ")
 
 #@title Cloud cover
@@ -630,17 +627,15 @@ df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.skyc1_o,df_res_dropna.skyc1_ml),2)
 
 #show results
-st.markdown("  #### **Cloud cover level 1**")
-st.markdown("Reference (48 hours) Accuracy machine learning: 64%")
-
+st.markdown("  ### **Cloud cover level 1**")
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='')
+         markerfacecolor='w', color="b", linestyle='')
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_o'], marker="*", markersize=13,
-         markerfacecolor='k', linestyle='');
+         markerfacecolor='k', color="g", linestyle='');
 plt.legend(('Cloud cover ml', 'cloud cover observed'),)
 plt.grid(True)
-plt.title("Accuracy machine learning: {:.0%} ".format(acc_ml))
+plt.title("Accuracy machine learning: {:.0%}. Reference: 64%".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -700,8 +695,7 @@ acc_ml = round(accuracy_score(df_res_dropna.skyl1_l,df_res_dropna.skyl1_ml),2)
 
 
 #show results
-st.markdown(" #### **Cloud height level 1**")
-st.markdown("Reference (48 hours) Accuracy machine learning: 83%")
+st.markdown(" ### **Cloud height level 1**")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
 
@@ -712,12 +706,12 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('cloud height ml', 'cloud height observed'),)
 plt.grid(True)
-plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
+plt.title("Accuracy machine learning: {:.0%}. Reference: 83%".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_for.index, df_for['skyl1_ml'],marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="b",linestyle='');
 
 plt.title("Forecast machine learning")
 plt.grid(True)
@@ -729,7 +723,6 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 AgGrid(round(df_prob,2))
-
 
 
 #@title Temperature
@@ -762,19 +755,14 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF)
 
 #print results
 st.markdown(" #### **Temperature Celsius**")
-st.markdown("Reference (48 hours) Mean absolute error meteorological model: 1.44")
-st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.85")
-
-#show results
 fig, ax = plt.subplots(figsize=(10,6))
-df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
+title = "Mean absolute error meteorological model: {}. Reference: 1.44\nMean absolute error machine learning: {}.Reference: 0.85".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
-# Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
-df_for.plot(grid=True, ax=ax, linestyle='--')
+df_for.plot(grid=True, ax=ax, color= ["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 st.pyplot(fig)
 
@@ -805,19 +793,16 @@ df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.tempd_o,df_res_dropna.tempd_ml),2)
 
 #print results
-st.markdown(" #### **Dew temperature Celsius**")
-st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.95")
-
-#show results
+st.markdown(" ### **Dew temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
-df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Mean absolute error machine learning: {} ".format(mae_ml)
+df_res.dropna().plot(grid=True, ax=ax, color=["r","b"],linestyle='--');
+title = "Mean absolute error machine learning: {}. Reference: 0.95 ".format(mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
-df_for.plot(grid=True, ax=ax, linestyle='--')
+df_for.plot(grid=True, ax=ax, color="b",linestyle='--')
 ax.set_title("Forecast machine learning")
 st.pyplot(fig)
 
@@ -852,19 +837,15 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF)
 
 #print results
 st.markdown("#### **Pressure hectopascals**")
-st.markdown("Reference (48 hours) Mean absolute error meteorological model: 0.85")
-st.markdown("Reference (48 hours) Mean absolute error machine learning: 0.45")
-
-#show results
 fig, ax = plt.subplots(figsize=(10,6))
-df_res.dropna().plot(grid=True, ax=ax, linestyle='--');
-title = "Mean absolute error meteorological model: {}\nMean absolute error machine learning: {} ".format(mae_wrf,mae_ml)
+df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
+title = "Mean absolute error meteorological model: {}. Reference:0.85\nMean absolute error machine learning: {}. Reference: 0.45 ".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
-df_for.plot(grid=True, ax=ax, linestyle='--')
+df_for.plot(grid=True, ax=ax, color=["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 st.pyplot(fig)
 
