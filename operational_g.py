@@ -70,7 +70,6 @@ def get_metar(oaci,control):
      df_metar["wxcodes_o"] = df_metar["wxcodes"]
      df_metar["metar_o"] = df_metar["metar"]
      
-
      # Select all columns that do not start with "_o"
      columns_to_keep = [col for col in df_metar.columns if col.endswith("_o")]
      df_metar = df_metar[columns_to_keep] 
@@ -200,13 +199,13 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2
 st.markdown(" ### **Wind intensity knots**")
 fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["r","b","g"]);
-title = "Actual mean absolute error meteorological model: {} /reference: 1.35\nActual mean absolute error machine learning: {} /reference: 0.89".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {} .Reference: 1.35\nActual mean absolute error machine learning: {} .Reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
 
 # show forecasts
 fig, ax = plt.subplots(figsize=(8,6))
-df_for.plot(grid=True, ax=ax, linestyle='--')
+df_for.plot(grid=True, ax=ax, color= ["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 st.pyplot(fig)
 
