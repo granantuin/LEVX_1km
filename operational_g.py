@@ -701,9 +701,9 @@ st.write(cm_ml)
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['skyl1_ml'],marker="^", markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="b",linestyle='');
 plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8, 
-         markerfacecolor='w', linestyle='');
+         markerfacecolor='w', color="g",linestyle='');
 plt.legend(('cloud height ml', 'cloud height observed'),)
 plt.grid(True)
 plt.title("Accuracy machine learning: {:.0%}. Reference: 83%".format(acc_ml))
@@ -795,7 +795,7 @@ mae_ml = round(mean_absolute_error(df_res_dropna.tempd_o,df_res_dropna.tempd_ml)
 #print results
 st.markdown(" ### **Dew temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
-df_res.dropna().plot(grid=True, ax=ax, color=["r","b"],linestyle='--');
+df_res.dropna().plot(grid=True, ax=ax, color=["g","b"],linestyle='--');
 title = "Mean absolute error machine learning: {}. Reference: 0.95 ".format(mae_ml)
 ax.set_title(title)
 st.pyplot(fig)
