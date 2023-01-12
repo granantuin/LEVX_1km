@@ -758,7 +758,7 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF)
 st.markdown(" #### **Temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
-title = "Mean absolute error meteorological model: {}. Reference: 1.44\nMean absolute error machine learning: {}.Reference: 0.85".format(mae_wrf,mae_ml)
+title = "Mean absolute error meteorological model: {}. Reference: 1.44\nMean absolute error machine learning: {}. Reference: 0.85".format(mae_wrf,mae_ml)
 ax.set_title(title)
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
