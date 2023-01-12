@@ -760,11 +760,13 @@ fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
 title = "Mean absolute error meteorological model: {}. Reference: 1.44\nMean absolute error machine learning: {}.Reference: 0.85".format(mae_wrf,mae_ml)
 ax.set_title(title)
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, color= ["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 
@@ -799,12 +801,14 @@ fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["b","g"],linestyle='--');
 title = "Mean absolute error machine learning: {}. Reference: 0.95 ".format(mae_ml)
 ax.set_title(title)
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, color="b",linestyle='--')
 ax.set_title("Forecast machine learning")
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 
@@ -842,12 +846,14 @@ fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
 title = "Mean absolute error meteorological model: {}. Reference:0.85\nMean absolute error machine learning: {}. Reference: 0.45 ".format(mae_wrf,mae_ml)
 ax.set_title(title)
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 # Create the plot
 fig, ax = plt.subplots(figsize=(10,6))
 df_for.plot(grid=True, ax=ax, color=["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
