@@ -201,14 +201,14 @@ fig, ax = plt.subplots(figsize=(8,6))
 df_res.dropna().plot(grid = True, ax=ax, linestyle='--', color = ["r","b","g"]);
 title = "Actual mean absolute error meteorological model: {}. Reference: 1.35\nActual mean absolute error machine learning: {}. Reference: 0.89".format(mae_wrf,mae_ml)
 ax.set_title(title)
-ax.grid(which = "both", axis = "both")
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 # show forecasts
 fig, ax = plt.subplots(figsize=(8,6))
 df_for.plot(grid=True, ax=ax, color= ["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
-ax.grid(which = "both", axis = "both")
+ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 #@title Wind direction
