@@ -18,6 +18,23 @@ warnings.filterwarnings("ignore")
 
 st.set_page_config(page_title="Vigo airport Machine Learning forecast",layout="wide")
 
+def Hss(cm):
+     """
+     obtain de Heidke skill score from a 3x3 confusion matrix (margins=on)
+     
+     Returns: Heidke skill score
+     """
+     if cm.shape == (3,3):
+          a = cm.values[0,0]
+          b = cm.values[1,0]
+          c = cm.values[0,1]
+          d = cm.values[1,1]
+          HSS = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+     else:
+          HSS = 0
+     return HSS
+
+
 def get_metar(oaci,control):
      """
      get metar from IOWA university database
@@ -319,13 +336,7 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score
 cm = pd.crosstab(df_res.dropna().gust_o_l, df_res.dropna().gust_ml, margins=True,)
-HSS = 0
-if cm.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm.values[0,0]
-  b = cm.values[1,0]
-  c = cm.values[0,1]
-  d = cm.values[1,1]
-  HSS = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+HSS = Hss(cm)
 
 #show results
 st.markdown(" ### **Wind gust**")
