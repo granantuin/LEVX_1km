@@ -291,6 +291,7 @@ df_prob["time"] = meteo_model[:48].index
 
 st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
+st.write(df_prob)
 
 
 #@title Wind gust
