@@ -242,7 +242,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize
          markerfacecolor='w', color="r", linestyle='');
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
 plt.grid(True, axis="both", which="both")
-plt.title("Actual accuracy meteorological model: {:.0%}. Reference: 28%\nAccuracy machine learning: {:.0%}. Reference: 40%".format(acc_wrf,acc_ml))
+plt.title("Actual accuracy meteorological model: {:.0%}. Reference: 28%\nActual accuracy machine learning: {:.0%}. Reference: 40%".format(acc_wrf,acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -617,7 +617,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyc1_o'], marker="*", markersize=1
          markerfacecolor='k', color="g", linestyle='');
 plt.legend(('Cloud cover ml', 'cloud cover observed'),)
 plt.grid(True)
-plt.title("Accuracy machine learning: {:.0%}. Reference: 64%".format(acc_ml))
+plt.title("Actual accuracy machine learning: {:.0%}. Reference: 64%".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -688,7 +688,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['skyl1_l'],marker="*",markersize=8,
          markerfacecolor='w', color="g",linestyle='');
 plt.legend(('cloud height ml', 'cloud height observed'),)
 plt.grid(True)
-plt.title("Accuracy machine learning: {:.0%}. Reference: 83%".format(acc_ml))
+plt.title("Actual accuracy machine learning: {:.0%}. Reference: 83%".format(acc_ml))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -739,7 +739,7 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF)
 st.markdown(" #### **Temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
-title = "Mean absolute error meteorological model: {}. Reference: 1.44\nMean absolute error machine learning: {}. Reference: 0.85".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {}. Reference: 1.44\nActual mean absolute error machine learning: {}. Reference: 0.85".format(mae_wrf,mae_ml)
 ax.set_title(title)
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
@@ -780,7 +780,7 @@ mae_ml = round(mean_absolute_error(df_res_dropna.tempd_o,df_res_dropna.tempd_ml)
 st.markdown(" ### **Dew temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["b","g"],linestyle='--');
-title = "Mean absolute error machine learning: {}. Reference: 0.95 ".format(mae_ml)
+title = "Actual mean absolute error machine learning: {}. Reference: 0.95 ".format(mae_ml)
 ax.set_title(title)
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
@@ -825,7 +825,7 @@ mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF)
 st.markdown("#### **Pressure hectopascals**")
 fig, ax = plt.subplots(figsize=(10,6))
 df_res.dropna().plot(grid=True, ax=ax, color=["r","b","g"],linestyle='--');
-title = "Mean absolute error meteorological model: {}. Reference:0.85\nMean absolute error machine learning: {}. Reference: 0.45 ".format(mae_wrf,mae_ml)
+title = "Actual mean absolute error meteorological model: {}. Reference:0.85\nActual mean absolute error machine learning: {}. Reference: 0.45 ".format(mae_wrf,mae_ml)
 ax.set_title(title)
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
