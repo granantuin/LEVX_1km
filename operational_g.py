@@ -268,7 +268,7 @@ plt.plot(df_res_dropna.index, df_res_dropna['dir_o_l'], marker="*", markersize=1
 plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize=8,
          markerfacecolor='w', color="r", linestyle='');
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
-plt.grid(True, axis="both")
+plt.grid(True, axis="both", which="both")
 plt.title("Actual accuracy meteorological model: {:.0%}. Reference: 28%\nAccuracy machine learning: {:.0%}. Reference: 40%".format(acc_wrf,acc_ml))
 st.pyplot(fig)
 
