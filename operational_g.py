@@ -398,23 +398,11 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_ml, margins=True,)
-HSS_ml = 0
-if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm_ml.values[0,0]
-  b = cm_ml.values[1,0]
-  c = cm_ml.values[0,1]
-  d = cm_ml.values[1,1]
-  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+HSS_ml = Hss(cm_ml)
 
 #Heidke skill score meteorological model
 cm_wrf = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_WRF, margins=True,)
-HSS_wrf = 0
-if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm_wrf.values[0,0]
-  b = cm_wrf.values[1,0]
-  c = cm_wrf.values[0,1]
-  d = cm_wrf.values[1,1]
-  HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+HSS_wrf = Hss(cm_wrf)
 
 #show results
 st.markdown(" ### **Visibility**")
@@ -483,14 +471,7 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().brfg_o_l, df_res.dropna().brfg_ml, margins=True,)
-HSS_ml = 0
-if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm_ml.values[0,0]
-  b = cm_ml.values[1,0]
-  c = cm_ml.values[0,1]
-  d = cm_ml.values[1,1]
-  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
-
+HSS_ml = Hss(cm_l)
 
 #show results
 st.markdown(" ### **BR or FG**")
@@ -557,23 +538,11 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_ml, margins=True,)
-HSS_ml = 0
-if cm_ml.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm_ml.values[0,0]
-  b = cm_ml.values[1,0]
-  c = cm_ml.values[0,1]
-  d = cm_ml.values[1,1]
-  HSS_ml = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+HSS_ml = Hss(cm_ml)
 
 #Heidke skill score meteorological model
 cm_wrf = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_WRF, margins=True,)
-HSS_wrf = 0
-if cm_wrf.shape == (3,3):# complete confusion matrix to calculate HSS
-  a = cm_wrf.values[0,0]
-  b = cm_wrf.values[1,0]
-  c = cm_wrf.values[0,1]
-  d = cm_wrf.values[1,1]
-  HSS_wrf = round(2*(a*d-b*c)/((a+c)*(c+d)+(a+b)*(b+d)),2)
+HSS_wrf = Hss(cm_wrf)
 
 #show results
 st.markdown(" ### **Precipitation**")
