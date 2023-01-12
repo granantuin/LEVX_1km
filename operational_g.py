@@ -471,7 +471,7 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().brfg_o_l, df_res.dropna().brfg_ml, margins=True,)
-HSS_ml = Hss(cm_l)
+HSS_ml = Hss(cm_ml)
 
 #show results
 st.markdown(" ### **BR or FG**")
