@@ -291,8 +291,6 @@ df_prob["time"] = meteo_model[:48].index
 
 st.write("""Probabilistic results only columns more than 5%""")
 AgGrid(round(df_prob,2))
-st.write(df_prob)
-
 
 #@title Wind gust
 #open algorithm gust d0 d1
@@ -354,7 +352,7 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-#AgGrid(round(df_prob,2)) 
+AgGrid(round(df_prob,2)) 
 st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
 
 #@title Visibility
