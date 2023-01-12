@@ -352,8 +352,8 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
-AgGrid(round(df_prob,1)) 
-st.bar_chart(round(df_prob,1), x= "time",y = "Gust")
+#AgGrid(round(df_prob,2)) 
+st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
 
 #@title Visibility
 #open algorithm visibility d0 d1
