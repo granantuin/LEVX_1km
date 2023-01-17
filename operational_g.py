@@ -164,6 +164,10 @@ def get_meteogalicia_model_1Km(coorde):
     return dffinal , control
 
 
+#score machine learning versus WRF
+score_ml = 0
+score_wrf = 0
+
 # Set the directory you want to list algorithms filenames from
 algo_dir = 'algorithms/'
 
@@ -230,6 +234,10 @@ df_res = pd.concat([df_for,metars[["dir_o","dir_o_l"]]],axis = 1)
 df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_ml),2)
 acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
+if acc_ml>acc_wrf:
+  score_ml+=1
+if acc_ml<acc_wrf:  
+  score_wrf+=1
 
 #Show results
 st.markdown(" #### **Wind direction**")
@@ -292,6 +300,10 @@ df_res = pd.concat([df_for,metars["spd_o"]],axis = 1)
 df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
+if mae_ml < mae_wrf:
+  score_ml+=1
+if mae_ml > mae_wrf:  
+  score_wrf+=1
 
 #show results actual versus models
 st.markdown(" ### **Wind intensity knots**")
@@ -335,14 +347,17 @@ df_for = df_for.set_index("time")
 df_res = pd.concat([df_for,metars["gust_o_l"]], axis = 1)
 df_res_dropna = df_res.dropna()
 
-#Heidke skill score
+#Heidke skill score and accuracy
 cm = pd.crosstab(df_res.dropna().gust_o_l, df_res.dropna().gust_ml, margins=True,)
+acc_ml = round(accuracy_score(df_res_dropna.gust_o_l,df_res_dropna.gust_ml),2)
 HSS = Hss(cm)
+
 
 #show results
 st.markdown(" ### **Wind gust**")
 st.markdown("Confusion matrix")
 st.write(cm)
+st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
@@ -399,18 +414,28 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_ml, margins=True,)
+acc_ml = round(accuracy_score(df_res_dropna.vis_o_l,df_res_dropna.vis_ml),2)
 HSS_ml = Hss(cm_ml)
 
 #Heidke skill score meteorological model
 cm_wrf = pd.crosstab(df_res.dropna().vis_o_l, df_res.dropna().vis_WRF, margins=True,)
+acc_wrf = round(accuracy_score(df_res_dropna.vis_o_l,df_res_dropna.vis_WRF),2)
 HSS_wrf = Hss(cm_wrf)
+if acc_ml>acc_wrf:
+  score_ml+=1
+if acc_ml<acc_wrf:  
+  score_wrf+=1
+
 
 #show results
 st.markdown(" ### **Visibility**")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
+st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
+
 st.markdown("Confusion matrix meteorological model")
 st.write(cm_wrf)
+st.write("Accuracy meteorologic model: {:.0%}".format(acc_wrf))
 
 fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_res_dropna.index, df_res_dropna['vis_ml'],marker="^", markersize=8, 
