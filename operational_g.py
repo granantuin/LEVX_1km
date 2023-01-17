@@ -497,12 +497,14 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().brfg_o_l, df_res.dropna().brfg_ml, margins=True,)
+acc_ml = round(accuracy_score(df_res_dropna.brfg_o_l,df_res_dropna.brfg_ml),2)
 HSS_ml = Hss(cm_ml)
 
 #show results
 st.markdown(" ### **BR or FG**")
 st.markdown("Confusion matrix")
 st.write(cm_ml)
+st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
 
 fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_res_dropna.index, df_res_dropna['brfg_ml'],marker="^", markersize=8, 
@@ -564,18 +566,28 @@ df_res_dropna = df_res.dropna()
 
 #Heidke skill score ml
 cm_ml = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_ml, margins=True,)
+acc_ml = round(accuracy_score(df_res_dropna.prec_o_l,df_res_dropna.prec_ml),2)
 HSS_ml = Hss(cm_ml)
 
 #Heidke skill score meteorological model
 cm_wrf = pd.crosstab(df_res.dropna().prec_o_l, df_res.dropna().prec_WRF, margins=True,)
 HSS_wrf = Hss(cm_wrf)
+acc_wrf = round(accuracy_score(df_res_dropna.prec_o_l,df_res_dropna.prec_WRF),2)
+if acc_ml>acc_wrf:
+  score_ml+=1
+if acc_ml<acc_wrf:  
+  score_wrf+=1
+
 
 #show results
 st.markdown(" ### **Precipitation**")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
+st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
 st.markdown("Confusion matrix meteorological model")
 st.write(cm_wrf)
+st.write("Accuracy meteorologic model: {:.0%}".format(acc_wrf))
+
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['prec_ml'],marker="^", markersize=8, 
@@ -759,6 +771,10 @@ df_res = pd.concat([df_for,metars["temp_o"]],axis = 1)
 df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF),2)
+if mae_ml < mae_wrf:
+  score_ml+=1
+if mae_ml > mae_wrf:  
+  score_wrf+=1
 
 #print results
 st.markdown(" #### **Temperature Celsius**")
@@ -845,6 +861,10 @@ df_res = pd.concat([df_for,metars["mslp_o"]],axis = 1)
 df_res_dropna = df_res.dropna()
 mae_ml = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF),2)
+if mae_ml < mae_wrf:
+  score_ml+=1
+if mae_ml > mae_wrf:  
+  score_wrf+=1
 
 #print results
 st.markdown("#### **Pressure hectopascals**")
@@ -861,6 +881,9 @@ df_for.plot(grid=True, ax=ax, color=["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
+
+st.write("Better meteorological model outcome: {}".format(score_wrf))
+st.write("Better meteorological machine learning: {}".format(score_ml))
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
 
