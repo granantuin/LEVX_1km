@@ -644,6 +644,9 @@ df_res = pd.concat([df_for,metars["skyc1_o"]],axis = 1)
 #get accuracy
 df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.skyc1_o,df_res_dropna.skyc1_ml),2)
+cm_ml = pd.crosstab(df_res.dropna().skyc1_o, df_res.dropna().skyc1_ml, margins=True,)
+st.write(cm_ml)
+
 
 #show results
 st.markdown("  ### **Cloud cover level 1**")
@@ -883,7 +886,7 @@ ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 st.write("Better meteorological model outcome: {}".format(score_wrf))
-st.write("Better meteorological machine learning: {}".format(score_ml))
+st.write("Better machine learning outcome: {}".format(score_ml))
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
 
