@@ -899,9 +899,9 @@ st.pyplot(fig)
 
 #global results
 st.write("Better meteorological model outcome: {}".format(score_wrf))
-st.write(best_ml)
-st.write("Better machine learning outcome: {}".format(score_ml))
 st.write(best_wrf)
+st.write("Better machine learning outcome: {}".format(score_ml))
+st.write(best_ml)
 
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
