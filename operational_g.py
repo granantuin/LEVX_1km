@@ -657,7 +657,9 @@ cm_ml = pd.crosstab(df_res.dropna().skyc1_o, df_res.dropna().skyc1_ml, margins=T
 
 #show results
 st.markdown("  ### **Cloud cover level 1**")
+st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
+
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=8, 
          markerfacecolor='w', color="b", linestyle='')
