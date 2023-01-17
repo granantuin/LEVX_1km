@@ -167,6 +167,8 @@ def get_meteogalicia_model_1Km(coorde):
 #score machine learning versus WRF
 score_ml = 0
 score_wrf = 0
+best_ml = []
+best_wrf = []
 
 # Set the directory you want to list algorithms filenames from
 algo_dir = 'algorithms/'
@@ -236,8 +238,10 @@ acc_ml = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_ml),2)
 acc_wrf = round(accuracy_score(df_res_dropna.dir_o_l,df_res_dropna.dir_WRF_l),2)
 if acc_ml>acc_wrf:
   score_ml+=1
+  best_ml.append("wind direction")   
 if acc_ml<acc_wrf:  
   score_wrf+=1
+  best_wrf.append("wind direction")   
 
 #Show results
 st.markdown(" #### **Wind direction**")
@@ -302,9 +306,11 @@ mae_ml = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_ml),2)
 mae_wrf = round(mean_absolute_error(df_res_dropna.spd_o,df_res_dropna.spd_WRF),2)
 if mae_ml < mae_wrf:
   score_ml+=1
+  best_ml.append("wind speed")   
 if mae_ml > mae_wrf:  
   score_wrf+=1
-
+  best_ml.append("wind speed")
+     
 #show results actual versus models
 st.markdown(" ### **Wind intensity knots**")
 fig, ax = plt.subplots(figsize=(8,6))
@@ -423,9 +429,10 @@ acc_wrf = round(accuracy_score(df_res_dropna.vis_o_l,df_res_dropna.vis_WRF),2)
 HSS_wrf = Hss(cm_wrf)
 if acc_ml>acc_wrf:
   score_ml+=1
+  best_ml.append("visibility")   
 if acc_ml<acc_wrf:  
   score_wrf+=1
-
+  best_wrf.append("visibility")   
 
 #show results
 st.markdown(" ### **Visibility**")
@@ -575,8 +582,10 @@ HSS_wrf = Hss(cm_wrf)
 acc_wrf = round(accuracy_score(df_res_dropna.prec_o_l,df_res_dropna.prec_WRF),2)
 if acc_ml>acc_wrf:
   score_ml+=1
+  best_ml.append("precipitation")   
 if acc_ml<acc_wrf:  
   score_wrf+=1
+  best_wrf.append("precipitation")   
 
 
 #show results
@@ -645,11 +654,10 @@ df_res = pd.concat([df_for,metars["skyc1_o"]],axis = 1)
 df_res_dropna = df_res.dropna()
 acc_ml = round(accuracy_score(df_res_dropna.skyc1_o,df_res_dropna.skyc1_ml),2)
 cm_ml = pd.crosstab(df_res.dropna().skyc1_o, df_res.dropna().skyc1_ml, margins=True,)
-st.write(cm_ml)
-
 
 #show results
 st.markdown("  ### **Cloud cover level 1**")
+st.write(cm_ml)
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['skyc1_ml'], marker="^", markersize=8, 
          markerfacecolor='w', color="b", linestyle='')
@@ -776,9 +784,11 @@ mae_ml = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_ml),2
 mae_wrf = round(mean_absolute_error(df_res_dropna.temp_o,df_res_dropna.temp_WRF),2)
 if mae_ml < mae_wrf:
   score_ml+=1
+  best_ml.append("temperature")   
 if mae_ml > mae_wrf:  
   score_wrf+=1
-
+  best_wrf.append("temperature")
+     
 #print results
 st.markdown(" #### **Temperature Celsius**")
 fig, ax = plt.subplots(figsize=(10,6))
@@ -866,9 +876,11 @@ mae_ml = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_ml),2
 mae_wrf = round(mean_absolute_error(df_res_dropna.mslp_o,df_res_dropna.mslp_WRF),2)
 if mae_ml < mae_wrf:
   score_ml+=1
+  best_ml.append("pressure")   
 if mae_ml > mae_wrf:  
   score_wrf+=1
-
+  best_wrf.append("pressure")
+     
 #print results
 st.markdown("#### **Pressure hectopascals**")
 fig, ax = plt.subplots(figsize=(10,6))
@@ -885,8 +897,12 @@ ax.set_title("Forecast meteorological model versus machine learning")
 ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
+#global results
 st.write("Better meteorological model outcome: {}".format(score_wrf))
+st.write(best_ml)
 st.write("Better machine learning outcome: {}".format(score_ml))
+st.write(best_wrf)
+
 
 st.write("Project [link](https://github.com/granantuin/LEVX_1km)")
 
