@@ -184,7 +184,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 #show meteorological model and control variable. Control variable True if Day analysis = today 
 #st.write(#### **Day analysis = today :**",con)
-st.write(meteo_model)
+#st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
 st.markdown(" ### **Metars**")
