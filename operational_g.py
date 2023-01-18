@@ -184,7 +184,7 @@ meteo_model["weekofyear"] = meteo_model.index.isocalendar().week.astype(int)
 
 #show meteorological model and control variable. Control variable True if Day analysis = today 
 #st.write(#### **Day analysis = today :**",con)
-#st.write(meteo_model)
+st.write(meteo_model)
 
 metars = get_metar("LEVX",con)
 st.markdown(" ### **Metars**")
@@ -900,6 +900,7 @@ ax.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 #global results
+st.write("#### **Global results**")
 st.write("Better meteorological model outcome: {}".format(score_wrf))
 st.write(best_wrf)
 st.write("Better machine learning outcome: {}".format(score_ml))
