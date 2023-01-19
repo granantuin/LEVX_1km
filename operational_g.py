@@ -384,7 +384,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-st.write("""Probabilistic results""")
+st.write("""Gusts probability""")
 #AgGrid(round(df_prob,2)) 
 #st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
 fig, ax = plt.subplots(figsize=(10,8))
@@ -472,9 +472,12 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-st.write("""Probabilistic results""")
+st.write("""Probability horizontal visibility below 1000 meters""")
 #AgGrid(round(df_prob,2)) 
-st.bar_chart(round(df_prob,2), x= "time",y = "<= 1000 m")
+#st.bar_chart(round(df_prob,2), x= "time",y = "<= 1000 m")
+fig, ax = plt.subplots(figsize=(10,8))
+df_prob["<= 1000 m"].plot(ax=ax, grid=True, kind='bar')
+st.pyplot(fig)
 
 #@title BR or FG
 #open algorithm prec d0 d1
@@ -625,8 +628,11 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-st.write("""Probabilistic results""")
-st.bar_chart(round(df_prob,2), x= "time",y = "RA/DZ")
+st.write("""Rain or drizzle probability""")
+#st.bar_chart(round(df_prob,2), x= "time",y = "RA/DZ")
+fig, ax = plt.subplots(figsize=(10,8))
+df_prob["RA/DZ"].plot(ax=ax, grid=True, kind='bar')
+st.pyplot(fig)
 
 #@title Cloud cover
 import matplotlib.pyplot as plt
