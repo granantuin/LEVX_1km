@@ -386,7 +386,10 @@ df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_mod
 df_prob["time"] = meteo_model[:48].index
 st.write("""Probabilistic results""")
 #AgGrid(round(df_prob,2)) 
-st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
+#st.bar_chart(round(df_prob,2), x= "time",y = "Gust")
+fig, ax = plt.subplots(figsize=(10,8))
+df_prob["Gust"].plot(ax=ax, grid=True, kind='bar')
+st.pyplot(fig)
 
 #@title Visibility
 #open algorithm visibility d0 d1
