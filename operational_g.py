@@ -216,12 +216,10 @@ interval = pd.IntervalIndex.from_tuples([(-1.5, -0.5),(-0.5,20), (20, 40), (40, 
                                            (160,180),(180,200),(200,220),(220,240),
                                            (240,260),(260,280),(280,300),(300,320),
                                            (320,340),(340,360)])
-
 labels = ['VRB', '[0, 20]', '(20, 40]', '(40, 60]','(60, 80]', '(80, 100]',
           '(100, 120]', '(120, 140]','(140, 160]', '(160, 180]', '(180, 200]',
           '(200, 220]','(220, 240]', '(240, 260]', '(260, 280]', '(280, 300]',
           '(300, 320]', '(320, 340]', '(340, 360]']
-
 df_for["dir_WRF_l"] = pd.cut(df_for["dir_WRF"], bins=interval,retbins=False,
                         labels=labels).map({a:b for a,b in zip(interval,labels)}).astype(str)
 
@@ -437,7 +435,7 @@ if acc_ml<acc_wrf:
   best_wrf.append("visibility")   
 
 #show results
-st.markdown(" ### **Visibility**")
+st.markdown(" ### **Horizontal visibility**")
 st.markdown("Confusion matrix machine learning")
 st.write(cm_ml)
 st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
@@ -471,7 +469,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-st.write("""Probability horizontal visibility below 1000 meters""")
+st.write(""" **Horizontal visibility below 1000 meters probability**""")
 #AgGrid(round(df_prob,2)) 
 #st.bar_chart(round(df_prob,2), x= "time",y = "<= 1000 m")
 fig, ax = plt.subplots(figsize=(10,8))
@@ -629,7 +627,7 @@ st.pyplot(fig)
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
 df_prob["time"] = meteo_model[:48].index
-st.write("""Rain or drizzle probability""")
+st.write(""" **Rain or drizzle probability**""")
 #st.bar_chart(round(df_prob,2), x= "time",y = "RA/DZ")
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["RA/DZ"].plot(ax=ax, grid=True, kind='bar')
