@@ -386,9 +386,12 @@ st.write(""" **Gusts probability** """)
 #AgGrid(round(df_prob,2)) 
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["Gust"].plot(ax=ax, grid=True, kind='bar')
+plt.gcf().autofmt_xdate()
+plt.gca().fmt_xdata = lambda x: x.strftime('%d-%m %H')
 st.pyplot(fig)
 
 #@title Visibility
+
 #open algorithm visibility d0 d1
 #alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0_p.al","rb")) #_p for a plus algorithm
 alg = pickle.load(open("algorithms/vis_LEVX_1km_time_d0.al","rb"))
