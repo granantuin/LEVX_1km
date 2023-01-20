@@ -386,7 +386,7 @@ st.write(""" **Gusts probability** """)
 #AgGrid(round(df_prob,2)) 
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["Gust"].plot(ax=ax, grid=True, kind='bar')
-plt.gcf().autofmt_xdate()
+#plt.gcf().autofmt_xdate()
 plt.gca().fmt_xdata = lambda x: x.strftime('%d-%m %H')
 st.pyplot(fig)
 
