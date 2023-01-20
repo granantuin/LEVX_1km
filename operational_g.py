@@ -380,14 +380,12 @@ st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
-df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(pd.to_datetime(meteo_model[:48].index)))
-#df_prob["time"] = pd.to_datetime(meteo_model[:48].index)
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%Y-%m-%d'))))
 st.write(""" **Gusts probability** """)
 #AgGrid(round(df_prob,2)) 
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["Gust"].plot(ax=ax, grid=True, kind='bar')
-#plt.gcf().autofmt_xdate()
-plt.gca().fmt_xdata = lambda x: x.strftime('%d-%m %H')
+
 st.pyplot(fig)
 
 #@title Visibility
