@@ -469,11 +469,12 @@ st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
-df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H')))
 df_prob["time"] = meteo_model[:48].index
 st.write(""" **Horizontal visibility below 1000 meters probability**""")
 #AgGrid(round(df_prob,2)) 
 fig, ax = plt.subplots(figsize=(10,8))
+           
 df_prob["<= 1000 m"].plot(ax=ax, grid=True, kind='bar')
 st.pyplot(fig)
 
@@ -626,7 +627,7 @@ st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
-df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index))
+df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H')))
 df_prob["time"] = meteo_model[:48].index
 st.write(""" **Rain or drizzle probability**""")
 fig, ax = plt.subplots(figsize=(10,8))
