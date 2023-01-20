@@ -623,7 +623,7 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["RA/DZ"] = df_prob["RA/DZ"].round(1)
-df_prob["RA/DZ"].plot(ax=ax, grid=True, title = "Rain or drizzle probability*",kind='bar')
+df_prob["RA/DZ"].plot(ax=ax, grid=True, title = "Rain or drizzle probability",kind='bar')
 st.pyplot(fig)
 
 #@title Cloud cover
