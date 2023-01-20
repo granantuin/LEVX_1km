@@ -379,7 +379,7 @@ plt.grid(True, axis="both")
 st.pyplot(fig)
 
 #show probabilistic results
-prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
+prob = round((np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)),1).transpose()
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
 st.write(""" **Gusts probability** """)
 #AgGrid(round(df_prob,2)) 
