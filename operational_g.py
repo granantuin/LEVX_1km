@@ -469,7 +469,7 @@ prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].pred
 df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
 fig, ax = plt.subplots(figsize=(10,8))
 df_prob["<= 1000 m"] =df_prob["<= 1000 m"].round(1)           
-df_prob["<= 1000 m"].plot(ax=ax, grid=True, xlim =[0, 1], title="Horizontal visibility below 1000 meters probability", kind='bar')
+df_prob["<= 1000 m"].plot(ax=ax, grid=True, ylim =[0, 1], title="Horizontal visibility below 1000 meters probability", kind='bar')
 st.pyplot(fig)
 
 #@title BR or FG
