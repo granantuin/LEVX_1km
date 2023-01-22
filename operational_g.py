@@ -288,7 +288,7 @@ model_x_var1 = meteo_model[24:48][alg1["x_var"]]
 # forecat spd from ml and wrf
 spd_ml = alg["pipe"].predict(meteo_model[:24][alg["x_var"]])
 spd_ml1 = alg1["pipe"].predict(meteo_model[24:48][alg1["x_var"]])
-df_for = pd.DataFrame({"time":meteo_model[:48].index..map(lambda t: t.strftime('%d-%m %H')),
+df_for = pd.DataFrame({"time":meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H')),
                        "spd_WRF": np.concatenate((np.rint(model_x_var["mod0"]*1.94384),
                                                    np.rint(model_x_var1["mod0"]*1.94384)),axis=0),
                        "spd_ml": np.concatenate((np.rint(spd_ml*1.94384),
