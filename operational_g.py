@@ -320,7 +320,6 @@ st.pyplot(fig)
 
 # show forecasts
 fig, ax = plt.subplots(figsize=(8,6))
-df_for.index = df_for.index.map(lambda t: t.strftime('%d-%m %H'))
 df_for.plot(grid=True, ax=ax, color= ["r","b"],linestyle='--')
 ax.set_title("Forecast meteorological model versus machine learning")
 ax.grid(True, which = "both", axis = "both")
