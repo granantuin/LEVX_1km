@@ -307,7 +307,7 @@ if mae_ml < mae_wrf:
   best_ml.append("wind speed")   
 if mae_ml > mae_wrf:  
   score_wrf+=1
-  best_ml.append("wind speed")
+  best_wrf.append("wind speed")
      
 #show results actual versus models
 st.markdown(" ### **Wind intensity knots**")
