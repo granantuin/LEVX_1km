@@ -275,7 +275,6 @@ cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
 
 #Display
-
 fig1, ax = plt.subplots()
 sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',
@@ -283,10 +282,6 @@ sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
 plt.title('Probabilities wind direction more than 5%')
 st.pyplot(fig1)
 
-#df_prob["time"] = meteo_model[:48].index
-
-#st.write("""Probabilistic results only columns more than 5%""")
-#AgGrid(round(df_prob,2))
 
 #@title Wind intensity
 
@@ -393,11 +388,25 @@ st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
-df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
-fig, ax = plt.subplots(figsize=(10,8))
-df_prob["Gust"] = df_prob["Gust"].round(1)
-df_prob["Gust"].plot(ax=ax, grid=True, ylim =[0, 1], title ="Gusts probability", kind='bar')
-st.pyplot(fig)
+#df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
+#fig, ax = plt.subplots(figsize=(10,8))
+#df_prob["Gust"] = df_prob["Gust"].round(1)
+#df_prob["Gust"].plot(ax=ax, grid=True, ylim =[0, 1], title ="Gusts probability", kind='bar')
+#st.pyplot(fig)
+
+#new display
+df_prob = pd.DataFrame(prob,index =alg["pipe"].classes_ ).T
+df_prob.index = meteo_model[:48].index.strftime('%b %d %H:%M Z')
+
+fig1, ax = plt.subplots()
+sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',
+           annot_kws={'size': 5})
+plt.title('Probabilities wind direction more than 5%')
+st.pyplot(fig1)
+
+
+
 
 #@title Visibility
 
