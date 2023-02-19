@@ -274,14 +274,13 @@ df_prob.index = meteo_model[:48].index.strftime('%b %d %H:%M Z')
 cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
 
-#new
-
+#Display
 
 fig1, ax = plt.subplots()
 sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',
            annot_kws={'size': 5})
-plt.title('Probabilies wind intensity more than 5%')
+plt.title('Probabilities wind direction more than 5%')
 st.pyplot(fig1)
 
 #df_prob["time"] = meteo_model[:48].index
