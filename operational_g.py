@@ -279,7 +279,8 @@ df_prob.drop(cols_to_drop, axis=1, inplace=True)
 
 fig1, ax = plt.subplots()
 sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
-            linewidths=.2, linecolor='black',fmt='.0%')
+            linewidths=.2, linecolor='black',fmt='.0%',
+           annot_kws={'size': 10})
 plt.title('Probabilies wind intensity more than 5%')
 st.pyplot(fig1)
 
