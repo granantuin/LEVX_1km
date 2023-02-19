@@ -10,6 +10,7 @@ import warnings
 import streamlit as st
 import matplotlib.pyplot as plt
 from st_aggrid import AgGrid
+import seaborn as sns
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_absolute_error
 
@@ -270,10 +271,20 @@ df_prob = pd.DataFrame(prob,index =alg["pipe"].classes_ ).T
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
-df_prob["time"] = meteo_model[:48].index
 
-st.write("""Probabilistic results only columns more than 5%""")
-AgGrid(round(df_prob,2))
+#new
+df_prob.index = meteo_model[:48].index.strftime('%b %d %H:%M Z')
+
+fig1, ax = plt.subplots()
+sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%')
+plt.title('Probabilies wind intensitycon more than 5%')
+st.pyplot(fig1)
+
+#df_prob["time"] = meteo_model[:48].index
+
+#st.write("""Probabilistic results only columns more than 5%""")
+#AgGrid(round(df_prob,2))
 
 #@title Wind intensity
 
