@@ -267,18 +267,20 @@ st.pyplot(fig)
 #probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
 df_prob = pd.DataFrame(prob,index =alg["pipe"].classes_ ).T
+df_prob = df_prob[labels]
+df_prob.index = meteo_model[:48].index.strftime('%b %d %H:%M Z')
 
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob.columns[df_prob.apply(lambda x: x <= 0.05).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
 
 #new
-df_prob.index = meteo_model[:48].index.strftime('%b %d %H:%M Z')
+
 
 fig1, ax = plt.subplots()
-sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
+sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%')
-plt.title('Probabilies wind intensitycon more than 5%')
+plt.title('Probabilies wind intensity more than 5%')
 st.pyplot(fig1)
 
 #df_prob["time"] = meteo_model[:48].index
