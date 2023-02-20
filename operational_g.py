@@ -373,6 +373,7 @@ fig1, ax = plt.subplots(figsize=(4,2))
 sns.heatmap(cm, annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',)
 plt.title("Confusion matrix\nAccuracy machine learning: {:.0%}".format(acc_ml))
+fig1.set_size_inches(6,4)
 st.pyplot(fig1)
 
 #st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
