@@ -367,16 +367,11 @@ HSS = Hss(cm)
 
 #show results
 st.markdown(" ### **Wind gust**")
-#st.markdown("Confusion matrix")
-#st.write(cm)
 fig1, ax = plt.subplots(figsize=(4,2))
 sns.heatmap(cm, annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',)
 plt.title("Confusion matrix\nAccuracy machine learning: {:.0%}".format(acc_ml))
-fig1.set_size_inches(6,4)
 st.pyplot(fig1)
-
-#st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
@@ -459,13 +454,26 @@ if acc_ml<acc_wrf:
 
 #show results
 st.markdown(" ### **Horizontal visibility**")
-st.markdown("Confusion matrix machine learning")
-st.write(cm_ml)
-st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
+#st.markdown("Confusion matrix machine learning")
+#st.write(cm_ml)
+#st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
+fig1, ax = plt.subplots(figsize=(4,2))
+sns.heatmap(cm_ml, annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',)
+plt.title("Confusion matrix\nAccuracy machine learning: {:.0%}".format(acc_ml))
+st.pyplot(fig1)
 
-st.markdown("Confusion matrix meteorological model")
-st.write(cm_wrf)
-st.write("Accuracy meteorologic model: {:.0%}".format(acc_wrf))
+fig1, ax = plt.subplots(figsize=(4,2))
+sns.heatmap(cm_wrf, annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',)
+plt.title("Confusion matrix\nAccuracy meteorologic model: {:.0%}".format(acc_wrf))
+st.pyplot(fig1)
+
+
+
+#st.markdown("Confusion matrix meteorological model")
+#st.write(cm_wrf)
+#st.write("Accuracy meteorologic model: {:.0%}".format(acc_wrf))
 
 fig, ax = plt.subplots(figsize=(10,4))
 plt.plot(df_res_dropna.index, df_res_dropna['vis_ml'],marker="^", markersize=8, 
