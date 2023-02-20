@@ -367,12 +367,12 @@ HSS = Hss(cm)
 
 #show results
 st.markdown(" ### **Wind gust**")
-st.markdown("Confusion matrix")
+#st.markdown("Confusion matrix")
 #st.write(cm)
-fig1, ax = plt.subplots(figsize=(6,4))
+fig1, ax = plt.subplots(figsize=(4,2))
 sns.heatmap(cm, annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',)
-plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
+plt.title("Confusion matrix\nAccuracy machine learning: {:.0%}".format(acc_ml))
 st.pyplot(fig1)
 
 #st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
