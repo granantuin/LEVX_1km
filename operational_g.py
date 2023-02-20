@@ -368,8 +368,14 @@ HSS = Hss(cm)
 #show results
 st.markdown(" ### **Wind gust**")
 st.markdown("Confusion matrix")
-st.write(cm)
-st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
+#st.write(cm)
+fig1, ax = plt.subplots()
+sns.heatmap(cm, annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',)
+plt.title("Accuracy machine learning: {:.0%}".format(acc_ml))
+st.pyplot(fig1)
+
+#st.write("Accuracy machine learning: {:.0%}".format(acc_ml))
 
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['gust_ml'], marker="^", markersize=10, 
@@ -388,11 +394,6 @@ st.pyplot(fig)
 
 #show probabilistic results
 prob = (np.concatenate((alg["pipe"].predict_proba(model_x_var),alg1["pipe"].predict_proba(model_x_var1)),axis =0)).transpose()
-#df_prob = (pd.DataFrame(prob,index =alg["pipe"].classes_ ).T.set_index(meteo_model[:48].index.map(lambda t: t.strftime('%d-%m %H'))))
-#fig, ax = plt.subplots(figsize=(10,8))
-#df_prob["Gust"] = df_prob["Gust"].round(1)
-#df_prob["Gust"].plot(ax=ax, grid=True, ylim =[0, 1], title ="Gusts probability", kind='bar')
-#st.pyplot(fig)
 
 #new display
 df_prob = pd.DataFrame(prob,index =alg["pipe"].classes_ ).T
