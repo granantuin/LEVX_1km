@@ -108,7 +108,7 @@ def get_meteogalicia_model_1Km(coorde):
     var2 = "&var=lwflx&var=conv_prec&var=prec&var=swflx&var=shflx&var=cape&var=cin&var=cfh&var=T850"
     var3 = "&var=cfl&var=cfm&var=cft&var=HGT500&var=HGT850&var=T500&var=snow_prec&var=snowlevel"
     var = var1+var2+var3 
-    head1 = "http://mandeo.meteogalicia.es/thredds/ncss/wrf_1km_baixas/fmrc/files/" 
+    head1 = "https://mandeo.meteogalicia.es/thredds/ncss/wrf_1km_baixas/fmrc/files/" 
 
     try:
           
