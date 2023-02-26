@@ -399,7 +399,7 @@ fig1, ax = plt.subplots()
 sns.heatmap(df_prob[:48], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',
            annot_kws={'size': 5})
-plt.title('Probabilities wind direction more than 5%')
+plt.title('Wind gust probability')
 st.pyplot(fig1)
 
 
