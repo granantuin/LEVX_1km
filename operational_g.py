@@ -259,6 +259,7 @@ ax.set_xticklabels(df_res_dropna.index.strftime('%b%d-%H'))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
+df_for.index = pd.DatetimeIndex(df_for.index)
 plt.plot(df_for.index, df_for['dir_ml'],marker="^", color="b", linestyle='');
 plt.plot(df_for.index, df_for['dir_WRF_l'],marker="v",color="r", linestyle='');
 plt.legend(('direction ml','direction WRF'),)
