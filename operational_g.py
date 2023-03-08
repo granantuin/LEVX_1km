@@ -245,7 +245,6 @@ if acc_ml<acc_wrf:
 
 #Show results
 st.markdown(" #### **Wind direction**")
-df_res_dropna.index = df_res_dropna.index.strftime('%b %d %HUTC')
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res_dropna.index, df_res_dropna['dir_ml'], marker="^", markersize=8, 
          markerfacecolor='w', color="b", linestyle='')
