@@ -263,6 +263,7 @@ plt.plot(df_for.index, df_for['dir_ml'],marker="^", color="b", linestyle='');
 plt.plot(df_for.index, df_for['dir_WRF_l'],marker="v",color="r", linestyle='');
 plt.legend(('direction ml','direction WRF'),)
 plt.title("Forecast meteorological model versus machine learning")
+ax.set_xticklabels(df_res_dropna.index.strftime('%b%d-%H'))
 plt.grid(True)
 st.pyplot(fig)
 
