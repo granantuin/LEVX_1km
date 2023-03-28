@@ -255,7 +255,6 @@ plt.plot(df_res_dropna.index, df_res_dropna['dir_WRF_l'], marker="v", markersize
 plt.legend(('direction ml', 'direction observed', 'direction WRF'),)
 plt.grid(True, axis="both", which="both")
 plt.title("Actual accuracy meteorological model: {:.0%}. Reference: 28%\nActual accuracy machine learning: {:.0%}. Reference: 40%".format(acc_wrf,acc_ml))
-ax.set_xticklabels(df_res_dropna.index.strftime('%b%d-%H'))
 st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(10,6))
