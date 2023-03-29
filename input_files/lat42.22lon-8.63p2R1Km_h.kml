@@ -2,13 +2,13 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
     <Document id="1">
         <Placemark id="3">
-            <name>0.0</name>
+            <name>0.2</name>
             <Point id="2">
                 <coordinates>-8.634,42.222,0.0</coordinates>
             </Point>
         </Placemark>
         <Placemark id="5">
-            <name>0.0</name>
+            <name>2.7</name>
             <Point id="4">
                 <coordinates>-8.635,42.244,0.0</coordinates>
             </Point>
